@@ -1,7 +1,9 @@
 <template>
     <ul class="v-footer">
         <li>a</li>
-        <li>b</li>
+        <li>
+            <router-link to="/cate">分类</router-link>
+        </li>
         <li>c</li>
         <li>
             <router-link to="/personalCenter">我的</router-link>

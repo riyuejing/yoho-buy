@@ -19,7 +19,7 @@
                 </li>
                 <!--待修正-->
                 <li>
-                    <router-link to="/list">分类</router-link>
+                    <router-link to="/cate">分类</router-link>
                 </li>
                 <!--待修正-->
                 <li>
@@ -50,6 +50,8 @@
                     this.title = "个人中心";
                 }else if(this.path == '/index'){
                     this.title = "index";
+                }else if(this.path == '/search'){
+                    this.title = "搜索";
                 }
             }
         },
@@ -71,9 +73,9 @@
         top:0;
         left:0;
         width:100vw;
-        height: 2.625rem;
-        line-height: 2.625rem;
-        background-color: #000;
+        height: 3.28125rem;
+        line-height: 3.28125rem;
+        background-color:#4f4138;
         background-image: linear-gradient(#323232,#414141);
         color:#fff;
 
@@ -82,8 +84,8 @@
             top: 0;
             display: block;
             width: 2.625rem;
-            height: 2.625rem;
-            line-height: 2.625rem;
+            height: 3.28125rem;
+            line-height: 3.28125rem;
             font-size: 28px;
             font-weight: bold;
             text-align: center;
@@ -103,8 +105,8 @@
         width: 8rem;
         height: 8.875rem;
         right: .3rem;
-        top: 3rem;
-        /*overflow: auto;*/
+        top: 3.8rem;
+        z-index: 999;
         padding-top: .425rem;
         background-image: linear-gradient(#434343,#171717);
         border-radius: .25rem;
