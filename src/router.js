@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+<<<<<<< HEAD
 import PersonalCenter from './views/personalCenter/personalCenter'
 import Index from './views/index'
 import Search from './views/search'
@@ -8,11 +9,16 @@ import SignUp from './views/signUp/signUp'
 import International from './views/international'
 import Sms from './views/sms'
 import Cate from './views/cate/cate'
+=======
+import Home from './views/Home.vue'
+import About from './views/About.vue'
+
+>>>>>>> parent of 6e1dd34... Merge pull request #3 from riyuejing/develop_zy
 Vue.use(Router)
 
 export default new Router({
-    mode:"history",
   routes: [
+<<<<<<< HEAD
       {
         path:'/',
         redirect:'/index'
@@ -66,5 +72,17 @@ export default new Router({
           name:'cate',
           component:Cate
       }
+=======
+    {
+      path: '/',
+      name: 'home',
+      component: Home
+    },
+    {
+      path: '/about',
+      name: 'about',
+      component: About
+    }
+>>>>>>> parent of 6e1dd34... Merge pull request #3 from riyuejing/develop_zy
   ]
 })
