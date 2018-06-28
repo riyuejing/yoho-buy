@@ -14,14 +14,14 @@ import Cate from './views/cate/cate'
 import BringStockCenter from './views/OneFloorPart/BringStockCenter'
 //待修改
 import New from './views/new' //新品到着
-import BSC2 from './views/OneFloorPart/BSC2'//领劵中心子页
-import Coupons from './views/OneFloorPart/coupons'//查看我优惠券页
+import BSC2 from './views/OneFloorPart/BSC2' //领劵中心子页
+import Coupons from './views/OneFloorPart/coupons' //查看我优惠券页
 import TOIS from './views/thirdFloorPart/TOIS' //热门品牌中TOIS
 import HotBrand from './views/thirdFloorPart/hotBrandShuff' //热门品牌中Cheett
 import BNS from './views/thirdFloorPart/BSN' //热门品牌中BNS
-import ShopIntro1 from './views/thirdFloorPart/ShopIntroTotal/shopIntro1'//TOIS店铺介绍
-import ShopIntro2 from './views/thirdFloorPart/ShopIntroTotal/shopIntro2'//TOIS店铺介绍
-import ShopIntro3 from './views/thirdFloorPart/ShopIntroTotal/shopIntro3'//TOIS店铺介绍
+import ShopIntro1 from './views/thirdFloorPart/ShopIntroTotal/shopIntro1' //TOIS店铺介绍
+import ShopIntro2 from './views/thirdFloorPart/ShopIntroTotal/shopIntro2' //TOIS店铺介绍
+import ShopIntro3 from './views/thirdFloorPart/ShopIntroTotal/shopIntro3' //TOIS店铺介绍
 //caiyan
 import DetailPro from './components/detail_introduction/detail_introduce'
 import lifestyleBrands from './components/lifestyle_brands/lifestyle_brands'
@@ -34,8 +34,7 @@ import orderList from './views/orderList/orderList.vue'
 Vue.use(Router)
 export default new Router({
   mode: "history",
-  routes: [
-    {
+  routes: [{
       path: '/',
       redirect: '/index'
     },
@@ -49,22 +48,14 @@ export default new Router({
     {
       path: '/personalCenter',
       name: 'personalCenter',
-      component: PersonalCenter,
-      children: [
-        {
-          path: '/orders',
-          name: 'orderList',
-          component: orderList,
-        }
-      ]
+      component: PersonalCenter
     },
     //登录页面
     {
       path: '/signIn',
       name: 'signIn',
       component: SignIn,
-      children: [
-        {
+      children: [{
           path: 'international',
           name: 'international',
           component: International
@@ -87,12 +78,11 @@ export default new Router({
       path: '/search',
       name: 'search',
       component: Search,
-      children: [
-        {
-          path: "list",
-          name: "list",
-          component: List
-        }]
+      children: [{
+        path: "list",
+        name: "list",
+        component: List
+      }]
     },
     //购物车
     {
@@ -129,13 +119,11 @@ export default new Router({
       path: '/stock',
       name: 'BringStockCenter',
       component: BringStockCenter,
-      children: [
-        {
-          path: 'travel',
-          name: 'BSC2',
-          component: BSC2
-        }
-      ]
+      children: [{
+        path: 'travel',
+        name: 'BSC2',
+        component: BSC2
+      }]
     },
     //领劵中心中点击查看我的优惠券跳转到:"优惠券"页面
     {
@@ -184,26 +172,32 @@ export default new Router({
     },
     //展示地址
     {
-      path:'/show',
-      component:Show
+      path: '/show',
+      component: Show
     },
-     //TOIS店铺简介
-     {
-       path: '/shopintroone',
-       name: 'shopIntro1',
-       component: ShopIntro1,
-     },
-     //Chett店铺简介
-     {
-       path: '/shopintrotwo',
-       name: 'shopIntro2',
-       component: ShopIntro2,
-     },
-     //BSN店铺简介
-     {
-       path: '/shopintrothir',
-       name: 'shopIntro3',
-       component: ShopIntro3,
-     }
+    //TOIS店铺简介
+    {
+      path: '/shopintroone',
+      name: 'shopIntro1',
+      component: ShopIntro1,
+    },
+    //Chett店铺简介
+    {
+      path: '/shopintrotwo',
+      name: 'shopIntro2',
+      component: ShopIntro2,
+    },
+    //BSN店铺简介
+    {
+      path: '/shopintrothir',
+      name: 'shopIntro3',
+      component: ShopIntro3,
+    },
+    //用户订单页面
+    {
+      path: '/personalCenter/orders',
+      name: 'orderList',
+      component: orderList,
+    }
   ]
 })
