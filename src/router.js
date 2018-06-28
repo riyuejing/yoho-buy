@@ -29,6 +29,8 @@ import cart from './components/cart/cart'
 import Order from './views/order/order'
 import Address from './views/address/address'
 import Show from './views/show/show'
+import orderList from './views/orderList/orderList.vue'
+
 Vue.use(Router)
 export default new Router({
   mode: "history",
@@ -48,6 +50,13 @@ export default new Router({
       path: '/personalCenter',
       name: 'personalCenter',
       component: PersonalCenter,
+      children: [
+        {
+          path: '/orders',
+          name: 'orderList',
+          component: orderList,
+        }
+      ]
     },
     //登录页面
     {
@@ -177,6 +186,7 @@ export default new Router({
     {
       path:'/show',
       component:Show
+
       
     },
   
@@ -277,4 +287,24 @@ export default new Router({
         component:ListToCate
       }
       ]
+    },
+     //TOIS店铺简介
+     {
+       path: '/shopintroone',
+       name: 'shopIntro1',
+       component: ShopIntro1,
+     },
+     //Chett店铺简介
+     {
+       path: '/shopintrotwo',
+       name: 'shopIntro2',
+       component: ShopIntro2,
+     },
+     //BSN店铺简介
+     {
+       path: '/shopintrothir',
+       name: 'shopIntro3',
+       component: ShopIntro3,
+     }
+  ]
 })
