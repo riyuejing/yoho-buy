@@ -212,7 +212,7 @@ export default new Router({
     //展示地址
     {
       path:'/show',
-      component:Show
+      component:Show,
     }
   ]
 })
