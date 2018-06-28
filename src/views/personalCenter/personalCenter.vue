@@ -10,8 +10,10 @@
         <div class="order">
             <div class="otitle">
                 我的订单
-                <i class="iconfont icon-jiantou"></i>
-                <span>全部订单</span>
+                <router-link tag="span" to="/personalCenter/orders">
+                    全部订单
+                    <i class="iconfont icon-jiantou"></i>
+                </router-link>
             </div>
             <ul class="line">
                 <li>
