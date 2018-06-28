@@ -21,12 +21,10 @@
             <ul class="list-con">
                 <li v-for="item in data" :class="getClass(item.goodsId)">
                     <img :src="(item.goodsImgs)[0]" :alt="item.goodsName">
-                    <!--上面的为什么是[0]-->
                     <div class="desdetail">
                         <p class="prosname">{{item.goodsName}}</p>
                         <p class="aboutprice">
                             <span class="cuprice" :class="{'cuprice2':item.goodsPrice.oldprice}">{{item.goodsPrice.currentPrice | price}}</span>
-                            <!--上面的语句是什么意思？cuprice2是什么意思-->
                             <span v-if="item.goodsPrice.oldprice" class="oldprice">{{item.goodsPrice.oldprice | price}}</span>
                             <span class="formore" @click="showSimilar(item)">
                                 <i class="iconfont icon-htmal5icon26"></i>
@@ -45,7 +43,7 @@
 </template>
 
 <script>
-    import Bus from '../components/common/bus'//bus连接的哪两个
+    import Bus from '../components/common/bus'
     import BScroll from 'better-scroll'
     import TitleTop from '../components/common/titleTop'
     export default {
@@ -57,7 +55,7 @@
             return {
                 data:{},
                 myPrimaryClass:'',
-                mySecondclass:''//这里的和下面的都是什么意思？
+                mySecondclass:''
             }
         },
 

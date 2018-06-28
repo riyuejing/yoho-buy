@@ -3,22 +3,22 @@
         <swiper class="swiper" :options="swiperOption"  ref="mySwiper">
             <!-- 这部分放你要渲染的那些内容 -->
             <swiper-slide class="swiper-slide" data-swiper-autoplay="3000">
-                <a href="">
+                <a @click="picToList">
                     <img style="width:100vw;" src="https://img11.static.yhbimg.com/yhb-img01/2018/06/21/13/019a1e958f08b001d26fa8fee149b44a49.jpg?imageView2/2/w/640/h/240/q/60" alt="">
                 </a>
             </swiper-slide>
             <swiper-slide class="swiper-slide" data-swiper-autoplay="3000">
-                <a href="">
+                <a @click="picToList">
                     <img style="width:100vw;" src="https://img11.static.yhbimg.com/yhb-img01/2018/06/21/13/01524aa8f5604dc1a158878230ac6a6463.jpg?imageView2/2/w/640/h/240/q/60" alt="">
                 </a>
             </swiper-slide>
             <swiper-slide class="swiper-slide" data-swiper-autoplay="3000">
-                <a href="">
+                <a @click="picToList">
                     <img style="width:100vw;" src="https://img10.static.yhbimg.com/yhb-img01/2018/06/21/13/013c903e90db2435edef16a87ea11a0310.jpg?imageView2/2/w/640/h/240/q/60" alt="">
                 </a>
             </swiper-slide>
             <swiper-slide class="swiper-slide" data-swiper-autoplay="3000">
-                <a href="">
+                <a @click="picToList">
                     <img style="width:100vw;" src="https://img10.static.yhbimg.com/yhb-img01/2018/06/21/13/019136dee3d42f8aa4120dc20c8df67c32.jpg?imageView2/2/w/640/h/240/q/60" alt="">
                 </a>
             </swiper-slide>
@@ -66,6 +66,17 @@
                     debugger: true,
                 }
             }
+
+        },
+        methods:{
+            picToList(){
+                this.$router.push({
+                    path:'/list',
+                    query:{
+                        from:'indexlunbo'
+                    }
+                })
+            },
 
         }
 
