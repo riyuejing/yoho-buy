@@ -178,8 +178,8 @@ export default new Router({
       path:'/show',
       component:Show
       
-    }
-  ]
+    },
+  
       //购物车
       {
         path:'/cart',
