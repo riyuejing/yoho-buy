@@ -14,8 +14,9 @@ import Cate from './views/cate/cate'
 import BringStockCenter from './views/OneFloorPart/BringStockCenter'
 //待修改
 import New from './views/new' //新品到着
-import BSC2 from './views/OneFloorPart/BSC2' //领劵中心子页
-import Coupons from './views/OneFloorPart/coupons' //查看我优惠券页
+import BSC2 from './views/OneFloorPart/BSC2'//领劵中心子页
+import Coupons from './views/OneFloorPart/coupons'//查看我优惠券页
+import NewPeople from './views/OneFloorPart/newpeople'//新人专享福利
 import TOIS from './views/thirdFloorPart/TOIS' //热门品牌中TOIS
 import HotBrand from './views/thirdFloorPart/hotBrandShuff' //热门品牌中Cheett
 import BNS from './views/thirdFloorPart/BSN' //热门品牌中BNS
@@ -197,7 +198,7 @@ export default new Router({
     {
       path: '/personalCenter/orders',
       name: 'orderList',
-      component: orderList,
+      component: orderList
     }
   ]
 })

@@ -21,8 +21,12 @@
             <router-link to="/coupons">
             <img class="p1" src="http://img11.static.yhbimg.com/yhb-img01/2016/05/25/15/01205da87b57469cad656644bbed4cb4f6.jpg?imageView2/2/w/0/h/0/q/60" alt="">
             </router-link>
+            <router-link to="/">
             <img class="p2" src="http://img10.static.yhbimg.com/yhb-img01/2016/05/25/17/010de958a30dce39a74fc1c7a325c4e167.jpg?imageView2/2/w/0/h/0/q/60" alt="">
+            </router-link>
+            <router-link to="/newpeople">
             <img src="http://img11.static.yhbimg.com/yhb-img01/2018/03/02/10/01c34132a8e2ed9ec3d994720ee99147a2.jpg?imageView2/2/w/0/h/0/q/60" alt="">
+            </router-link>
         </div>
 
         <router-view></router-view>
