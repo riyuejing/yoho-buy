@@ -32,7 +32,9 @@
         <div>
             <div class="floorTitle" style="position: relative">
                 <h2 style="display: inline-block">人气单品排行</h2>
+                <router-link to="/list">
                 <i style="position: absolute;right: 1rem" class="iconfont icon-fenleiweixuanzhong"></i>
+                </router-link>
             </div>
             <popular-item></popular-item>
         </div>
@@ -141,6 +143,13 @@
 <style lang="less" scoped>
 /*@import './search/iconfont.css';*/
 @import '../components/common/list/list.less';
+/*去除a链接点击时出现蓝色的背景*/
+a {
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    outline: none;
+}
 .list-wrap{
     position: relative;
     top:0;
@@ -162,6 +171,9 @@
     *{
         margin:0;
         padding:0;
+    }
+    a {
+        outline: none;
     }
     .outest-container {
         width: 100%;

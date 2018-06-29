@@ -1,15 +1,13 @@
 <template>
     <div class="thirdFloor">
         <ul class="hot-brands">
-            <li class="brand" v-for="popular in populars">
-                <a href="">
-                    <div class="brand-logo">
+            <li class="brand" v-for="(popular,index) in populars" :class="getClass(index)">
+                    <div class="brand-logo" @click="toList(index)">
                         <img :src="popular.src" alt="">
                     </div>
-                </a>
             </li>
             <li class="more">
-                <a href="">
+                <a href="/">
                     <div class="brand-logo">
                         <img src="http://img10.static.yhbimg.com/yhb-img01/2017/11/22/14/01fc7836ecc476bc3fdd5722626cd5eb56.jpg?imageView2/2/w/320/h/172/q/60" alt="">
                     </div>
@@ -26,24 +24,40 @@
             return{
                 populars:[
                     {
-                        src:"http://img11.static.yhbimg.com/yhb-img01/2017/11/30/13/01c708717ebd268f9d29aaf3f365ce98d3.jpg?imageView2/2/w/158/h/174/q/60"
+                        src:"http://img11.static.yhbimg.com/yhb-img01/2017/11/30/13/01c708717ebd268f9d29aaf3f365ce98d3.jpg?imageView2/2/w/158/h/174/q/60",
+                        hrefs:"/tois?from=index&query=tois"
                     },
                     {
-                        src: "http://img11.static.yhbimg.com/yhb-img01/2017/11/30/13/01111dabc82a71f531f67075f2f0b5a1a2.jpg?imageView2/2/w/158/h/174/q/60"
+                        src: "http://img11.static.yhbimg.com/yhb-img01/2017/11/30/13/01111dabc82a71f531f67075f2f0b5a1a2.jpg?imageView2/2/w/158/h/174/q/60",
+                        hrefs:"/hotbrand"
                     },
                     {
-                        src:"http://img11.static.yhbimg.com/yhb-img01/2017/11/30/13/01dadc2b40189876352e23aaf3660eb872.jpg?imageView2/2/w/158/h/174/q/60"},
-                    {
-                        src:"http://img10.static.yhbimg.com/yhb-img01/2017/11/30/13/01734fdb628d7aa7f252dbfd7759504d20.jpg?imageView2/2/w/158/h/174/q/60"
+                        src:"http://img11.static.yhbimg.com/yhb-img01/2017/11/30/13/01dadc2b40189876352e23aaf3660eb872.jpg?imageView2/2/w/158/h/174/q/60",
+                        hrefs:"/bns"
                     },
                     {
-                        src: "http://img11.static.yhbimg.com/yhb-img01/2017/11/30/13/0137124b441965e8b44568fcf04ec204eb.jpg?imageView2/2/w/158/h/174/q/60"
+                        src:"http://img10.static.yhbimg.com/yhb-img01/2017/11/30/13/01734fdb628d7aa7f252dbfd7759504d20.jpg?imageView2/2/w/158/h/174/q/60",
+                        toRoute:'goods/new-goods',hrefs:"/lifestyle-new?from=cate&query=your"
                     },
                     {
-                        src: "http://img10.static.yhbimg.com/yhb-img01/2017/11/30/13/016bcc4898e49963668e267faef37c895d.jpg?imageView2/2/w/158/h/174/q/60"
+                        src: "http://img11.static.yhbimg.com/yhb-img01/2017/11/30/13/0137124b441965e8b44568fcf04ec204eb.jpg?imageView2/2/w/158/h/174/q/60",
+                        toRoute:'goods/new-goods',
+                        hrefs:"/lifestyle-new?from=cate&query=lg"
                     },
-
+                    {
+                        src: "http://img10.static.yhbimg.com/yhb-img01/2017/11/30/13/016bcc4898e49963668e267faef37c895d.jpg?imageView2/2/w/158/h/174/q/60",
+                        toRoute:'goods/new-goods',hrefs:"/lifestyle-new?from=cate&query=qeedigi"
+                    }
                 ]
+            }
+        },
+        methods:{
+            getClass(_index){
+                return "popular"+_index;
+            },
+            toList(_index){
+                this.$store.commit("add",this.populars[_index]);
+                this.$router.push(this.populars[_index].hrefs);
             }
         }
     }

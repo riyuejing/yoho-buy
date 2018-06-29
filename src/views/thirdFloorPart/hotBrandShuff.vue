@@ -2,7 +2,8 @@
     <div>
         <title-top></title-top>
 
-        <router-link to="/hotbrand">
+        <router-link to="/hotbrand"></router-link>
+            <!--头部-->
             <div class="branner-top" style="background-image:url(http://img13.static.yhbimg.com/yhb-img02/2017/12/11/15/0236f6d70b06d709d819e3f316cd841f62.jpg?imageMogr2/auto-orient/strip/thumbnail/x234/crop/750x234)">
                 <div class="shopcover"></div>
                 <img class="logo"  src="http://img11.static.yhbimg.com/yhb-img01/2017/04/20/16/012e05fe5b373feea6648a486e6a3586e6.jpg?imageMogr2/thumbnail/100x100/extent/100x100/background/d2hpdGU=/position/center/quality/80" alt="">
@@ -14,7 +15,6 @@
                         <span class="shouc1" @click="changeStatus">{{btnStatus?'收藏':'已收藏'}}</span>
                     </div>
                 </div>
-
             </div>
 
             <!--tab切换部分-->
@@ -77,18 +77,78 @@
                             </div>
                         </div>
                         <div class="bt"></div>
+
+                        <!--列表-->
+                        <div class="list-wrap" ref="lis">
+                            <ul class="list-con">
+                                <li v-for="item in data" :class="getClass(item.goodsId)">
+                                    <img :src="(item.goodsImgs)[0]" :alt="item.goodsName">
+                                    <div class="desdetail">
+                                        <p class="prosname">{{item.goodsName}}</p>
+                                        <p class="aboutprice">
+                                            <span class="cuprice" :class="{'cuprice2':item.goodsPrice.oldprice}">{{item.goodsPrice.currentPrice | price}}</span>
+                                            <span v-if="item.goodsPrice.oldprice" class="oldprice">{{item.goodsPrice.oldprice | price}}</span>
+                                            <span class="formore" @click="showSimilar(item)">
+                                <i class="iconfont icon-htmal5icon26"></i>
+                            </span>
+                                        </p>
+                                    </div>
+
+                                </li>
+                            </ul>
+                        </div>
+
                     </div>
                     <!--导航二内容-->
                     <div class="new-nav" v-else-if="second">
 
+                        <!--列表-->
+                        <div class="list-wrap" ref="lis">
+                            <ul class="list-con">
+                                <li v-for="item in data" :class="getClass(item.goodsId)">
+                                    <img :src="(item.goodsImgs)[0]" :alt="item.goodsName">
+                                    <div class="desdetail">
+                                        <p class="prosname">{{item.goodsName}}</p>
+                                        <p class="aboutprice">
+                                            <span class="cuprice" :class="{'cuprice2':item.goodsPrice.oldprice}">{{item.goodsPrice.currentPrice | price}}</span>
+                                            <span v-if="item.goodsPrice.oldprice" class="oldprice">{{item.goodsPrice.oldprice | price}}</span>
+                                            <span class="formore" @click="showSimilar(item)">
+                                <i class="iconfont icon-htmal5icon26"></i>
+                            </span>
+                                        </p>
+                                    </div>
+
+                                </li>
+                            </ul>
+                        </div>
+
                     </div>
                     <!--导航三内容-->
                     <div class="goods-nav" v-else-if="third">
-
+                        <!--全部分类列表(从lcate复制)-->
+                        <!--全部分类列表头部-->
+                        <ul class="top-btn">
+                            <li>默认
+                                <i class="iconfont icon-sanjiao_xia"></i>
+                            </li>
+                            <li>新品</li>
+                            <li>人气</li>
+                            <li class="tab-price">价格
+                                <span class="arrow">
+                    <i class="iconfont icon-shangjiantou i-block1"></i>
+                    <i class="iconfont icon-xiajiantou i-block"></i>
+                </span>
+                            </li>
+                            <li>筛选
+                                <i class="iconfont icon-sanjiao_xia"></i>
+                            </li>
+                        </ul>
+                        <!--全部分类列表内容-->
+                        <listmin></listmin>
                     </div>
                 </div>
             </div>
-        </router-link>
+
         <!--底部-->
         <div class="shop-foot-wrapper">
             <ul>
@@ -115,18 +175,26 @@
 </template>
 
 <script>
+    import Bus from '../../components/common/bus'
     import TitleTop from '../../components/common/titleTop'
     import {swiper, swiperSlide} from 'vue-awesome-swiper'
+    import Listmin from '../../components/common/listmin'
+    import Lcate from '../../views/lcate'
     export default {
+        name: "hot-brand-shuff",
         components:
             {
                 TitleTop,
                 swiper,
-                swiperSlide
+                swiperSlide,
+                Listmin,
+                Lcate
             },
-        name: "hot-brand-shuff",
         data() {
             return {
+                data:{},
+                myPrimaryClass:'',
+                mySecondclass:'',
                 isA: false,
                 btnStatus: true,
                 isShow: false,
@@ -190,12 +258,60 @@
                     this.third = true;
                     this.changeHue = index;
                 }
+            },
+            getClass(_id){
+                return "id"+_id;
+            },
+            showSimilar(item){
+                if(item.isSimilar == undefined){
+                    this.$set(item,"isSimilar",true);
+                }else{
+                    item.isSimilar = !item.isSimilar;
+                }
+            }
+        },
+        created(){
+            Bus.$on("primaryClass",(data)=>{
+                this.myPrimaryClass = data;
+            });
+            Bus.$on("secondclass",(data)=>{
+                this.mySecondclass = data;
+            });
+            Bus.$on('indexsecondclass',(data)=>{
+                this.mySecondclass = data;
+            });
+            this.$http.get('/api/goods/goods-class',{
+                params:{
+                    primaryclass:this.myPrimaryClass,
+                    secondclass:this.mySecondclass
+                }
+            }).then(({data})=>{
+                this.data = data;
+            });
+        },
+        filters:{
+            price(price){
+                return "¥"+price;
             }
         }
+
     }
 </script>
 
 <style lang="less" scoped>
+    @import "../../components/common/list/list";
+    .list-wrap{
+        position:relative;
+        top:0;
+        left:0;
+    }
+    /*去除a链接点击时出现蓝色的背景*/
+    a {
+        -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        outline: none;
+    }
     .class-a {
         color: red;
     }
@@ -330,24 +446,24 @@
     }
 
     /*tab-导航条*/
-    .shop-tabs {
-        display: flex;
-        justify-content: space-around;
-        width: 100%;
-        font-size: .75rem;
-        line-height: 2rem;
-        border-top: 1px solid #dededf;
-        border-bottom: 1px solid #dededf;
-        background-color: #fff;
-        .shop-tab-nav {
-            width: 33.33%;
-            text-align: center;
-            span {
-                display: inline-block;
-                width: 100%;
+        .shop-tabs {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            font-size: .75rem;
+            line-height: 2rem;
+            border-top: 1px solid #dededf;
+            border-bottom: 1px solid #dededf;
+            background-color: #fff;
+            .shop-tab-nav {
+                width: 33.33%;
+                text-align: center;
+                span {
+                    display: inline-block;
+                    width: 100%;
+                }
             }
         }
-    }
 
     //轮播图
     .container2 {
@@ -410,6 +526,44 @@
             img {
                 width: 100%;
             }
+        }
+    }
+
+    /*全部商品的头部*/
+    .top-btn{
+        background-color: #fff;
+        width: 100%;
+        height: 1.7585rem;
+        display: flex;
+        position: relative;
+        top:-.2rem;
+        left: 0;
+        z-index: 999;
+        .arrow{
+            position: relative;
+            overflow: hidden;
+            .i-block1{
+                position: absolute;
+                top:-9px;
+                left:0;
+            }
+            .i-block{
+                position: absolute;
+                top:-2px;
+                left:0;
+            }
+            .gray{
+                color:#999;
+            }
+
+        }
+        li{
+            flex:1;
+            height: 1.7585rem;
+            line-height:1.7585rem;
+            text-align: center;
+            font-size: 14px;
+            color:#999;
         }
     }
 </style>

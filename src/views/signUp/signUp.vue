@@ -63,9 +63,11 @@
                 showpwd:false,
                 showpwdicon:"icon-htmal5icon08",
                 typepwd:"password",
+                imgsrc:"http://10.80.13.205:3000/captcha",
                 imgsrc:"/api/captcha",
                 flag:"",
                 isRegOk:''
+
             }
 
         },
@@ -112,6 +114,8 @@
                 }
             },
             changeImg(){
+
+                this.imgsrc = "http://10.80.13.205:3000/captcha?rt="+Math.random();
                 this.imgsrc = "/api/captcha?rt="+Math.random();
             }
 

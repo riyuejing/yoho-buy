@@ -50,7 +50,7 @@
     export default {
         name: "lcate",
         components:{
-            TitleTop
+          TitleTop
         },
         data(){
             return {
@@ -127,6 +127,6 @@
 <style lang="less" scoped>
     @import "../components/common/list/list";
     .list-wrap{
-        top:4.5rem;
+        top:4.5rem; 
     }
 </style>
