@@ -46,12 +46,14 @@
         components:{
             TitleTop,FooterBottom
         },
-        mounted(){
-            let listBscroll = new BScroll(this.refs.lis,{click:true});
+        created(){
             this.$http.get('/api/user/getCollections').then(({data}) => {
                 this.lisData = data;
                 console.log(this.lisData);
             })
+            // this.$nextTick(function() {
+            //     let listBscroll = new BScroll(this.refs.lis,{click:true});
+            // })
         },
     }
 </script>

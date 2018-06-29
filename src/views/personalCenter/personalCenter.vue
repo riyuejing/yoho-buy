@@ -3,7 +3,7 @@
         <title-top title="个人中心">{{username}}</title-top>
         <div class="bgtop">
             <img src="./logo.jpg" alt="lifestyle" class="logojpg">
-            <p class="logonaem">LifeStyle</p>
+            <!-- <p class="logonaem">LifeStyle</p> -->
             <div class="login-btn" v-if='!username'>
                 <router-link to="/signIn">登录 /</router-link>
                 <router-link to="/signUp"> 注册</router-link>
@@ -155,7 +155,7 @@
         .logonaem{
             color:#fff;
             position: relative;
-            bottom: -1.35rem;
+            bottom: -3.05rem;
             left: 0.3rem;
         }
         box-sizing: border-box;
