@@ -172,6 +172,16 @@ export default new Router({
       path: '/address',
       component: Address,
     },
+    //地址页面
+    {
+      path: '/address',
+      component: Address,
+    },
+    //地址页面
+    {
+      path: '/address',
+      component: Address,
+    },
     //展示地址
     {
       path: '/show',

@@ -141,7 +141,7 @@ export default {
 .fraud-tip {
   background: #fff;
   display: block;
-  padding: 0.3rem 0.75rem 0.5rem;
+  padding: 1.2rem 0.75rem 0.5rem;
   border-bottom: 1px solid #e0e0e0;
   i {
     color: #d80425;
