@@ -8,9 +8,7 @@ export default new Vuex.Store({
       data:{},
       items:[],
       signInTag:true,
-      loginMsg:{
-          username:''
-      }
+      username:''
 
 
   },
@@ -35,29 +33,29 @@ export default new Vuex.Store({
       },
 
 
-      //来自李超大佬的登录状态的存储
+      //来自的登录状态的存储
       getStorage: function (state) {
-          for(let i in state.loginMsg){
+          for(let i in state){
               if(!state[i]){
                   state[i] = localStorage.getItem(i)
               }
           }
-          return state.loginMsg;
+          return state;
       },
       setStorage(state,obj){
           for(let i in obj){
-              for(let key in state.loginMsg){
+              for(let key in state){
                   if(i == key){
-                      state.loginMsg[key] = obj[i];
-                      localStorage.setItem(i,state.loginMsg[key]);
+                      state[key] = obj[i];
+                      localStorage.setItem(i,state[key]);
                   }
               }
 
           }
       },
       removeAll(state){
-          for(let i in state.loginMsg){
-              state.loginMsg[i] = "";
+          for(let i in state){
+              state[i] = "";
               if(localStorage.getItem(i)){
                   localStorage.removeItem(i);
               }
