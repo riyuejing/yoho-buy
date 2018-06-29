@@ -127,9 +127,8 @@
                     display: inline-block;
                     width: 0.37rem;
                     height: 0.37rem;
-                    border: 1px solid lightgrey;
                     border-radius: 50%;
-                    background: transparent;
+                    background: rgba(255,255,255,.5);
                 }
                 .my-bullet-active{
                     background: #ffffff;
