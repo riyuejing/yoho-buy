@@ -5,7 +5,7 @@
             <h2>优惠券</h2>
         </div>
         <ul class="filter-box">
-            <li class="filter-btn-box" v-for="(item,index) in items" @click="change(index)">
+            <li class="filter-btn-box" :class="{hue:changeHue == index}" v-for="(item,index) in items" @click="change(index)">
                 <span class="filter-btn">{{item.name}}</span>
             </li>
         </ul>
@@ -67,6 +67,7 @@
                 first:true,
                 second:false,
                 third:false,
+                changeHue:0
             }
         },
         methods:{
@@ -79,14 +80,17 @@
                     this.first=true;
                     this.second=false;
                     this.third=false;
+                    this.changeHue = index;
                 }else if(index==1){
                     this.first=false;
                     this.second=true;
                     this.third=false;
+                    this.changeHue = index;
                 }else if(index==2){
                     this.first=false;
                     this.second=false;
                     this.third=true;
+                    this.changeHue = index;
                 }
                 console.log(index);
             }
@@ -96,6 +100,9 @@
 
 <style lang="less" scoped>
     @import "../../assets/fonts/iconfont.css";
+    .hue {
+        color: orangered;
+    }
     /*头部*/
     .iconfont{
         color: white;
@@ -147,7 +154,6 @@
             flex:1;
             line-height: 1.5rem;
             text-align: center;
-            color:#b0b0b0;
             border-right: 1px solid #e0e0e0;
             .filter-btn{
                 font-size: .7rem;

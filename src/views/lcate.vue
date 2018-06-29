@@ -17,12 +17,13 @@
                 <i class="iconfont icon-sanjiao_xia"></i>
             </li>
         </ul>
+
         <div class="list-wrap" ref="lis">
             <ul class="list-con">
-                <li v-for="item in data" :class="getClass(item.goodsId)">
-                    <img :src="(item.goodsImgs)[0]" :alt="item.goodsName">
+                <li v-for="(item,index) in data" :class="getClass(item.goodsId)">
+                    <img :src="(item.goodsImgs)[0]" :alt="item.goodsName" @click="goToDetail(item,index)">
                     <div class="desdetail">
-                        <p class="prosname">{{item.goodsName}}</p>
+                        <p class="prosname" @click="goToDetail(item,index)">{{item.goodsName}}</p>
                         <p class="aboutprice">
                             <span class="cuprice" :class="{'cuprice2':item.goodsPrice.oldprice}">{{item.goodsPrice.currentPrice | price}}</span>
                             <span v-if="item.goodsPrice.oldprice" class="oldprice">{{item.goodsPrice.oldprice | price}}</span>
@@ -70,8 +71,10 @@
                 this.mySecondclass = data;
             });
             this.$http.get('/api/goods/goods-class',{
-                primaryclass:this.myPrimaryClass,
-                secondclass:this.mySecondclass
+                params:{
+                    primaryclass:this.myPrimaryClass,
+                    secondclass:this.mySecondclass
+                }
             }).then(({data})=>{
                 this.data = data;
             });
@@ -106,6 +109,11 @@
                 }else{
                     item.isSimilar = !item.isSimilar;
                 }
+            },
+            goToDetail(obj,_index){
+                this.$router.push('/product');
+                this.$store.commit('detailId',obj.goodsId);
+                //console.log(obj.goodsId);
             }
         },
         filters:{
@@ -121,11 +129,4 @@
     .list-wrap{
         top:4.5rem; 
     }
-    .top-btn .arrow .i-block1{
-            top: -3px;
-        }
-        .top-btn .arrow .i-block{
-            top: 4px;
-        }
-
 </style>

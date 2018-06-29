@@ -1,4 +1,5 @@
 <template>
+    <!--购物底部-->
     <div class="cart-bar">
         <a class="cartfoot" href="javascript:;">
             <div class="num-incart">

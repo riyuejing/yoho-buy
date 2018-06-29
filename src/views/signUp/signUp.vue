@@ -22,7 +22,7 @@
                     <option value="+852">中国香港</option>
                 </select>
                 <span class="iconfont icon-xiasanjiao"></span>
-                <input type="tel" placeholder="请输入手机号" v-model="username" class="tel-input">
+                <input type="tel" placeholder="请输入手机号" v-model="username" class="tel-input" :checktel="checktel">
             </div>
             <div>
                 <span class="iconfont icon-mima"></span>
@@ -39,7 +39,7 @@
                 <div class="for-code" @click="changeImg">更改验证码</div>
             </div>
             <img :src="imgsrc">
-            <button class="btn" type="button" @click="goToRegister" :disabled="checkTel">注册</button>
+            <button class="btn" type="button" @click="goToRegister">注册</button>
             <p class="yestext">
                 <i class="iconfont icon-xuanze"></i>
                 <span>我已阅读并同意遵守<a href="###" class="forred">Yoho!Buy有货服务条款</a></span>
@@ -63,34 +63,43 @@
                 showpwd:false,
                 showpwdicon:"icon-htmal5icon08",
                 typepwd:"password",
-                imgsrc:"http://10.80.13.184:3000/captcha"
-            }
-        },
-        computed:{
-            //???????????
-            checkTel(){
-                console.log($('.tel-input'));
-                $('.tel-input').change(function(){
-                    if(!(/^[1][3,4,5,7,8][0-9]{9}$/.test(this.username))){
-                        console.log(this.username);
-                        console.log("请输入正确的手机号码啦");
-                        return 'disabled';
-                    }
-                });
+                imgsrc:"http://10.80.13.205:3000/captcha",
+                imgsrc:"/api/captcha",
+                flag:"",
+                isRegOk:''
+
             }
 
+        },
+        mounted(){
+
+        },
+        computed:{
+            checktel(){
+                if((/^[1][3,4,5,7,8][0-9]{9}$/.test(this.username))){
+                    $('.btn').css("backgroundColor","#4D8893");
+                }else{
+                    $('.btn').css("backgroundColor","#b0b0b0");
+                }
+            }
         },
         methods:{
             goToLast(){
                 this.$router.go(-1);
             },
             goToRegister(){
-                this.$http.post(`${this.$api}/register`,{
+                this.$http.post('/api/register',{
                     username:this.selected+this.username,
                     password:this.password,
                     verifyCode:this.verifyCode
-                }).then(({res}) => {
-                    console.log(res);
+                }).then(({data})=>{
+                    this.isRegOk = data;
+                    if( this.isRegOk.errorcode == 0){
+                        //跳转前一页
+                        //this.$router.push(-1);
+                        //注册成功跳转到首页
+                        this.$router.push('/index');
+                    }
                 })
             },
             toShowPwd(){
@@ -105,7 +114,9 @@
                 }
             },
             changeImg(){
-                this.imgsrc = "http://10.80.13.184:3000/captcha?rt="+Math.random();
+
+                this.imgsrc = "http://10.80.13.205:3000/captcha?rt="+Math.random();
+                this.imgsrc = "/api/captcha?rt="+Math.random();
             }
 
         }
@@ -197,6 +208,7 @@
                 width: 100%;
                 line-height: 1.75rem;
                 outline: none;
+                border:0;
                 text-align: center;
             }
             .yestext{

@@ -1,7 +1,7 @@
 <template>
     <div class="outest-container">
-        <div class="top">
-            <img src="../components/common/logo.jpg" alt="包包杂货店" class="logopng">
+        <div class="top">LIFESTYLE
+            <!--<img src="../components/common/logo.jpg" alt="包包杂货店" class="logopng">-->
             <a href="/search">
                 <i class="iconfont icon-sousuo"></i>
             </a>
@@ -29,18 +29,12 @@
 
             <third-floor></third-floor>
         </div>
-        <!--新客专享-->
-        <!--<div>-->
-            <!--<div class="floorTitle">-->
-                <!--<h2>新客专享</h2>-->
-            <!--</div>-->
-            <!--<ul style="height: 305px"></ul>-->
-        <!--</div>-->
-        <!--人气单品排行-->
         <div>
             <div class="floorTitle" style="position: relative">
                 <h2 style="display: inline-block">人气单品排行</h2>
+                <router-link to="/list">
                 <i style="position: absolute;right: 1rem" class="iconfont icon-fenleiweixuanzhong"></i>
+                </router-link>
             </div>
             <popular-item></popular-item>
         </div>
@@ -51,10 +45,10 @@
         </ul>
         <div class="list-wrap">
             <ul class="list-con">
-                <li v-for="item in data" :class="getClass(item.goodsId)">
-                    <img :src="(item.goodsImgs)[0]" :alt="item.goodsName">
+                <li v-for="(item,index) in data" :class="getClass(item.goodsId)">
+                    <img :src="(item.goodsImgs)[0]" :alt="item.goodsName" @click="goToDetail(item,index)">
                     <div class="desdetail">
-                        <p class="prosname">{{item.goodsName}}</p>
+                        <p class="prosname" @click="goToDetail(item,index)">{{item.goodsName}}</p>
                         <p class="aboutprice">
                             <span class="cuprice" :class="{'cuprice2':item.goodsPrice.oldprice}">{{item.goodsPrice.currentPrice | price}}</span>
                             <span v-if="item.goodsPrice.oldprice" class="oldprice">{{item.goodsPrice.oldprice | price}}</span>
@@ -130,7 +124,13 @@
                 this.$http.get('/api/goods/top-sale').then(({data})=>{
                 this.data = data;
             });
+            },
+            goToDetail(obj,_index){
+                this.$router.push('/product');
+                this.$store.commit('detailId',obj.goodsId);
+                //console.log(obj.goodsId);
             }
+
         },
         filters:{
             price(price){
@@ -143,6 +143,13 @@
 <style lang="less" scoped>
 @import './search/iconfont.css';
 @import '../components/common/list/list.less';
+/*去除a链接点击时出现蓝色的背景*/
+a {
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    outline: none;
+}
 .list-wrap{
     position: relative;
     top:0;
@@ -165,6 +172,9 @@
         margin:0;
         padding:0;
     }
+    a {
+        outline: none;
+    }
     .outest-container {
         width: 100%;
         margin-bottom: 2.1rem;
@@ -178,9 +188,11 @@
         background-image: linear-gradient(#323232,#414141);
         color:#fff;
         .logopng{
-            float:left;
-            width: 1rem;
-            height:100%;
+            position:absolute;
+            top:0;
+            left:0;
+            width: 2.5458rem;
+            height: 2.5458rem;
         }
         a{
             position:absolute;

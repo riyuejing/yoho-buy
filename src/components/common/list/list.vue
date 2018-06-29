@@ -34,15 +34,18 @@
                 <i class="iconfont icon-sanjiao_xia"></i>
             </li>
         </ul>
+
+
         <div class="list-wrap" ref="lis">
             <ul class="list-con">
-                <li v-for="item in data.goodsList" :class="getClass(item.goodsId)">
-                    <img :src="(item.goodsImgs)[0]" :alt="item.goodsName">
+                <li v-for="(item,index) in data.goodsList" :class="getClass(item.goodsId)">
+                    <img :src="(item.goodsImgs)[0]" :alt="item.goodsName" @click="goToDetail(item,index)">
                     <div class="desdetail">
-                        <p class="prosname">{{item.goodsName}}</p>
+                        <p class="prosname" @click="goToDetail(item,index)">{{item.goodsName}}</p>
                         <p class="aboutprice">
                             <span class="cuprice" :class="{'cuprice2':item.goodsPrice.oldprice}">{{item.goodsPrice.currentPrice | price}}</span>
-                            <span v-if="item.goodsPrice.oldprice" class="oldprice">{{item.goodsPrice.oldprice | price}}</span>
+                            <span v-if="item.goodsPrice.oldprice" class="oldprice">{{item.goodsPrice.oldprice | price}}
+                            </span>
                             <span class="formore" @click="isSimilar = !isSimilar">
                                 <i class="iconfont icon-htmal5icon26"></i>
                             </span>
@@ -74,7 +77,11 @@
         },
         mounted(){
             let listScroll = new BScroll(this.$refs.lis,{click:true});
-            this.$http.get('/api/search',{keyword:this.query}).then(({data})=>{
+            this.$http.get('/api/search',{
+                params:{
+                    keyword:this.query
+                }
+                }).then(({data})=>{
                 this.data = data;
                 console.log(this.data);
             })
@@ -99,6 +106,12 @@
         methods:{
             getClass(_id){
                 return "id"+_id;
+            },
+            goToDetail(obj,_index){
+                console.log(1111);
+                this.$router.push('/product');
+                this.$store.commit('detailId',obj.goodsId);
+                console.log(obj.goodsId);
             }
         },
         filters:{

@@ -13,7 +13,7 @@
             <div class="sign-form">
                 <div>
                     <span class="iconfont icon-msnui-tel"></span>
-                    <input type="tel" placeholder="请输入手机号/邮箱" v-model="username" class="tel-input">
+                    <input type="tel" placeholder="请输入手机号/邮箱" v-model="username" class="tel-input" :checktel="checktel">
                 </div>
                 <div>
                     <span class="iconfont icon-mima"></span>
@@ -50,12 +50,24 @@
                 password:'',
                 typepwd:"password",
                 forgetBox:false,
-                selected:'+86'
+                selected:'+86',
+                yesloginres:{}
+            }
+        },
+        computed:{
+            checktel(){
+                if((/^[1][3,4,5,7,8][0-9]{9}$/.test(this.username))){
+                    $('.btn').css("backgroundColor","#4D8893");
+                }else{
+                    $('.btn').css("backgroundColor","#b0b0b0");
+                }
             }
         },
         methods:{
             goToLast(){
+                this.$store.state.signInTag = true;
                 this.$router.go(-1);
+
             },
             toShowPwd(){
                 this.showpwd = !this.showpwd;
@@ -72,7 +84,20 @@
                 this.$http.post('/api/login',{
                     username:this.selected+this.username,
                     password:this.password
-
+                }).then(({data})=>{
+                    this.yesloginres = data;
+                    //console.log(this.yesloginres);
+                    let obj = {
+                        username: this.yesloginres.data.nickname,
+                    //     userId: data.data._id,
+                    };
+                    // if(data.data.phoneNumber){
+                    //     obj.nickname=data.data.phoneNumber;
+                    // }
+                    this.$store.commit('setStorage',obj);
+                    if(this.yesloginres.errorcode == 0){
+                        this.$router.push("/personalCenter");
+                    }
                 })
             },
         }

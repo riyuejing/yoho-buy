@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="signIn == true">
+        <div v-if="$store.state.signInTag">
             <div class="signin-top">
                 <div class="top-con">
                     <div class="block1">
@@ -29,7 +29,7 @@
                             <option value="+852">中国香港</option>
                         </select>
                         <span class="iconfont icon-xiasanjiao"></span>
-                        <input type="tel" placeholder="请输入手机号" v-model="username" class="tel-input">
+                        <input type="tel" placeholder="请输入手机号" v-model="username" class="tel-input" :checktel="checktel">
                     </div>
                     <div style="margin-bottom:0.5rem;">
                         <span class="iconfont icon-securityCode-b"></span>
@@ -55,9 +55,9 @@
                 <div class="btn" @click.stop="isAlertBox=!isAlertBox">好</div>
             </div>
         </div>
-
-        <router-view v-if="international == true"></router-view>
-        <router-view v-if="sms == true"></router-view>
+        <router-view></router-view>
+        <!--<router-view v-if="international == true"></router-view>-->
+        <!--<router-view v-if="sms == true"></router-view>-->
         <div class="forget" v-show="forgetBox">
             <div class="cover" @click="forgetBox = !forgetBox"></div>
             <div class="bottom-btn">
@@ -79,10 +79,17 @@
                 verifyCode:'',
                 selected:'+86',
                 path:this.$route.path,
-                international:false,
-                signIn:true,
-                sms:false,
-                imgsrc:"http://10.80.13.184:3000/captcha"
+                imgsrc:"/api/captcha",
+                isSignInmsg:'',
+            }
+        },
+        computed:{
+            checktel(){
+                if((/^[1][3,4,5,7,8][0-9]{9}$/.test(this.username))){
+                    $('.btn').css("backgroundColor","#4D8893");
+                }else{
+                    $('.btn').css("backgroundColor","#b0b0b0");
+                }
             }
         },
         methods:{
@@ -93,18 +100,23 @@
                 this.$http.post('/api/login',{
                     username:this.selected+this.username,
                     verifyCode:this.verifyCode
-                })
+                }).then(({data})=>{
+                    if(data.errorcode != 1){
+                        this.$router.push('/index');
+                    }
+                    console.log(data);
+                });
+
             },
             changeTag(){
-                this.international = true;
-                this.signIn = false;
+                this.$store.state.signInTag = false;
+
             },
             changeTag2(){
-                this.sms = true;
-                this.signIn = false;
+                this.$store.state.signInTag = false;
             },
             changeImg(){
-                this.imgsrc = "http://10.80.13.184:3000/captcha?rt="+Math.random();
+                this.imgsrc = "/api/captcha?rt="+Math.random();
             }
         }
     }
@@ -244,6 +256,7 @@
             width: 100%;
             line-height: 1.75rem;
             outline: none;
+            border:0;
             text-align: center;
         }
     }

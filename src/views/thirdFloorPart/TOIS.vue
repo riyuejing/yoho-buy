@@ -1,8 +1,9 @@
 <template>
     <div>
         <title-top></title-top>
-        <router-link to="/tois">
-            <div class="branner-top" style="background-image:url(//img12.static.yhbimg.com/yhb-img02/2018/02/08/15/02ae8e4bc973ba0e43abb3b18b7ecba4d8.jpg?imageMogr2/auto-orient/strip/thumbnail/x234/crop/750x234)">
+        <router-link to="/tois"></router-link>
+            <!--头部-->
+            <div class="branner-top" style="background-image:url(http://img12.static.yhbimg.com/yhb-img02/2018/02/08/15/02ae8e4bc973ba0e43abb3b18b7ecba4d8.jpg?imageMogr2/auto-orient/strip/thumbnail/x234/crop/750x234)">
                 <div class="shopcover"></div>
                 <img class="logo"  src="http://img11.static.yhbimg.com/yhb-img01/2017/11/06/13/014596c5488e7ce047f839dd55bc397398.jpg?imageMogr2/thumbnail/100x100/extent/100x100/background/d2hpdGU=/position/center/quality/80" alt="">
                 <h1 class="store-name">朵茜</h1>
@@ -15,20 +16,105 @@
                 </div>
 
             </div>
-        </router-link>
+
+            <!--tab切换部分-->
+            <div class="tab">
+                <!--nav-->
+                <ul class="shop-tabs">
+                    <li class="shop-tab-nav" v-for="(item,index) in items" @click="goPage(index)" :class="{hue:changeHue == index}"  style="border-right: 1px solid rgb(222,223,229)">
+                        <span>{{item.name}}</span>
+                    </li>
+                </ul>
+                <!--nav内容-->
+                <div class="tab-panels">
+                    <!--导航一内容-->
+                    <div class="home-nav" v-if="first">
+                        <!--列表-->
+                        <listmin></listmin>
+
+                    </div>
+                    <!--导航二内容-->
+                    <div class="new-nav" v-else-if="second">
+                        <!--列表-->
+                        <listmin></listmin>
+
+                    </div>
+                    <!--导航三内容-->
+                    <div class="goods-nav" v-else-if="third">
+                        <!--全部分类列表(从lcate复制)-->
+                        <!--全部分类列表头部-->
+                        <ul class="top-btn">
+                            <li>默认
+                                <i class="iconfont icon-sanjiao_xia"></i>
+                            </li>
+                            <li>新品</li>
+                            <li>人气</li>
+                            <li class="tab-price">价格
+                                <span class="arrow">
+                    <i class="iconfont icon-shangjiantou i-block1"></i>
+                    <i class="iconfont icon-xiajiantou i-block"></i>
+                </span>
+                            </li>
+                            <li>筛选
+                                <i class="iconfont icon-sanjiao_xia"></i>
+                            </li>
+                        </ul>
+                        <!--全部分类列表内容-->
+                        <listmin></listmin>
+                    </div>
+                </div>
+            </div>
+
+        <!--底部-->
+        <div class="shop-foot-wrapper">
+            <ul>
+                <li class="shop_footnav_one">
+                    <span  id="shop-category" @click="showToggle">商品分类</span>
+                    <div class="sub-group" v-show="isShow">
+                        <dl>
+                            <dd>
+                                <a href="javascript:;">成人用品</a>
+                            </dd>
+                        </dl>
+                        <div class="sharp"></div>
+                    </div>
+                    <div class="wall"></div>
+                </li>
+                <li>
+                    <a class="dianpu" href="http://localhost:8080/shopintroone">店铺简介</a>
+                </li>
+            </ul>
+        </div>
         <router-view></router-view>
     </div>
 </template>
 
 <script>
     import TitleTop from '../../components/common/titleTop'
+    import Listmin from '../../components/common/listmin'
     export default {
         name: "t-o-i-s",
-        components: {TitleTop},
+        components: {TitleTop,Listmin},
         data(){
             return{
                 isA:false,
-                btnStatus:true
+                btnStatus:true,
+                isShow:false,
+                items: [
+                    {
+                        name: "首页"
+                    },
+                    {
+                        name: "新品"
+                    },
+                    {
+                        name: "全部商品"
+                    }
+                ],
+                first: true,
+                second: false,
+                third: false,
+                changeHue:0,
             }
         },
         methods:{
@@ -37,17 +123,51 @@
             },
             changeStatus(){
                 this.btnStatus=this.btnStatus?false:true;
+            },
+            showToggle(){
+                this.isShow = !this.isShow;
+            },
+            goPage(index) {
+                console.log(index);
+                if (index == 0) {
+                    this.first = true;
+                    this.second = false;
+                    this.third = false;
+                    this.changeHue = index;
+                } else if (index == 1) {
+                    this.first = false;
+                    this.second = true;
+                    this.third = false;
+                    this.changeHue = index;
+                } else if (index == 2) {
+                    this.first = false;
+                    this.second = false;
+                    this.third = true;
+                    this.changeHue = index;
+                }
             }
+
         }
     }
 </script>
 
 <style lang="less" scoped>
+    /*去除a链接点击时出现蓝色的背景*/
+    a {
+        -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        outline: none;
+    }
     .class-a {
         color: red;
     }
     .class-b {
         color: white;
+    }
+    .hue {
+        color: rgb(184,155,178);
+        font-weight: 500;
     }
     .branner-top {
         width: 100%;
@@ -113,5 +233,125 @@
             }
 
         }
+    }
+
+    /*tab-导航条*/
+    .shop-tabs {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        font-size: .75rem;
+        line-height: 2rem;
+        border-top: 1px solid #dededf;
+        border-bottom: 1px solid #dededf;
+        background-color: #fff;
+        .shop-tab-nav {
+            width: 33.33%;
+            text-align: center;
+            span {
+                display: inline-block;
+                width: 100%;
+            }
+        }
+    }
+
+    /*全部商品的头部*/
+    .top-btn{
+        background-color: #fff;
+        width: 100%;
+        height: 1.7585rem;
+        display: flex;
+        position: relative;
+        top:-.2rem;
+        left: 0;
+        z-index: 999;
+        .arrow{
+            position: relative;
+            overflow: hidden;
+            .i-block1{
+                position: absolute;
+                top:-9px;
+                left:0;
+            }
+            .i-block{
+                position: absolute;
+                top:-2px;
+                left:0;
+            }
+            .gray{
+                color:#999;
+            }
+
+        }
+        li{
+            flex:1;
+            height: 1.7585rem;
+            line-height:1.7585rem;
+            text-align: center;
+            font-size: 14px;
+            color:#999;
+        }
+    }
+
+    /*底部样式*/
+    .shop-foot-wrapper {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        display: table;
+        width:100%;
+        height: 2rem;
+        line-height: 2rem;
+        font-size: .65rem;
+        background: #fff;
+        border-top: 1px solid #e0e0e0;
+        z-index: 2;
+        ul {
+            display: table-row;
+            li {
+                display: table-cell;
+                text-align: center;
+                .sub-group {
+                    position: absolute;
+                    background: #fff;
+                    border: 1px solid #e0e0e0;
+                    border-radius: .3rem;
+                    bottom: 2.6rem;
+                    width:40%;
+                    margin-left: 5%;
+                    dl {
+                        padding: 0 0.75rem;
+                        margin: 0 auto;
+                        dd {
+                            line-height: 2rem;
+                            text-align: center;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+                    }
+                    .sharp {
+                        position: absolute;
+                        width:100%;
+                        height: .25rem;
+                    }
+
+                }
+                .wall {
+                    width: 0;
+                    height: 1.25rem;
+                    margin-top:.375rem;
+                    float: right;
+                    border-right: 1px solid #e0e0e0;
+                    display: inline-block;
+                }
+            }
+            .dianpu {
+                display: inline-block;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
     }
 </style>
