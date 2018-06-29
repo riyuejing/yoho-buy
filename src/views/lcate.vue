@@ -3,18 +3,18 @@
         <title-top title="商品列表"></title-top>
         <ul class="top-btn">
             <li>默认
-                <i class="iconfont icon-sanjiao_xia"></i>
+                <i class="iconfont icon-jiantou-"></i>
             </li>
             <li>新品</li>
             <li>人气</li>
             <li class="tab-price">价格
                 <span class="arrow">
-                    <i class="iconfont icon-shangjiantou i-block1"></i>
-                    <i class="iconfont icon-xiajiantou i-block"></i>
+                    <i class="iconfont icon-shang i-block1"></i>
+                    <i class="iconfont icon-arrow1 i-block"></i>
                 </span>
             </li>
             <li>筛选
-                <i class="iconfont icon-sanjiao_xia"></i>
+                <i class="iconfont icon-jiantou-"></i>
             </li>
         </ul>
 
@@ -28,7 +28,7 @@
                             <span class="cuprice" :class="{'cuprice2':item.goodsPrice.oldprice}">{{item.goodsPrice.currentPrice | price}}</span>
                             <span v-if="item.goodsPrice.oldprice" class="oldprice">{{item.goodsPrice.oldprice | price}}</span>
                             <span class="formore" @click="showSimilar(item)">
-                                <i class="iconfont icon-htmal5icon26"></i>
+                                <i class="iconfont icon-gengduo"></i>
                             </span>
                         </p>
                     </div>

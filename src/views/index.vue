@@ -53,7 +53,7 @@
                             <span class="cuprice" :class="{'cuprice2':item.goodsPrice.oldprice}">{{item.goodsPrice.currentPrice | price}}</span>
                             <span v-if="item.goodsPrice.oldprice" class="oldprice">{{item.goodsPrice.oldprice | price}}</span>
                             <span class="formore" @click="showSimilar(item)">
-                                <i class="iconfont icon-htmal5icon26"></i>
+                                <i class="iconfont icon-gengduo"></i>
                             </span>
                         </p>
                     </div>
@@ -141,7 +141,7 @@
 </script>
 
 <style lang="less" scoped>
-@import './search/iconfont.css';
+/*@import './search/iconfont.css';*/
 @import '../components/common/list/list.less';
 /*去除a链接点击时出现蓝色的背景*/
 a {

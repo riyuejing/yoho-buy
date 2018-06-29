@@ -3,7 +3,7 @@
         <a href="/search">
             <div class="searchbar">
                 <div class="inputwrap">
-                    <i class="iconfont icon-sousuo"></i>
+                    <i class="iconfont icon-icon-test"></i>
                     <input type="text" placeholder="搜索商品">
                 </div>
 
@@ -100,7 +100,7 @@
 </script>
 
 <style lang="less" scoped>
-    @import '../search/iconfont.css';
+    /*@import '../search/iconfont.css';*/
     .lwrap{
         position: absolute;
         left: 0;
