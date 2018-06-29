@@ -79,7 +79,7 @@
 </script>
 
 <style lang="less" scoped>
-    @import './signUp/iconfont.css';
+    // @import './signUp/iconfont.css';
     .signup-wrap{
         width: 100%;
         box-sizing: border-box;

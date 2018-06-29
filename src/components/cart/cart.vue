@@ -551,7 +551,7 @@ export default {
 </script>
 
 <style scoped lang="less">
-@import './iconfont.css';
+// @import './iconfont.css';
 @import '../common/list/list';
 //请至少选择一件商品
 .atLeast,.islike,.iszero{

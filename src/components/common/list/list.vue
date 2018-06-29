@@ -123,7 +123,7 @@
 </script>
 
 <style lang="less" scoped>
-    @import "./iconfont.css";
+    // @import "./iconfont.css";
     @import "list";
     .brandwrap{
         width: 100%;
