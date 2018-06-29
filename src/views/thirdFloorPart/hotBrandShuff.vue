@@ -233,6 +233,14 @@
         methods: {
             getShow() {
                 this.isA = !this.isA;
+                //转到收藏
+                this.$http.get('/api/user/collectShop',{
+                    params:{
+                        seller:1
+                    }
+                }).then(({data})=>{
+
+                })
             },
             changeStatus() {
                 this.btnStatus = this.btnStatus ? false : true;

@@ -9,7 +9,7 @@
 
         <li>
             <router-link to="/cate">
-                <i class="iconfont icon-leimupinleifenleileibie hfcolor"></i>
+                <i class="iconfont icon-leimupinleifenleileibie1 hfcolor"></i>
                 <p class="tab-name">分类</p>
             </router-link>
         </li>

@@ -7,15 +7,12 @@
         <div class="hot-single-goods-list">
             <ul>
                 <li class="hot-single-goods" v-for="item in items">
-                    <!--点击下面的a链接跳转到商品详情页-->
-                    <a href="/product">
                         <img :src="item.src" alt="">
                         <div class="goods-info">
                             <h3 class="price">{{item.money}}</h3>
                             <p class="view-num">{{item.people}}</p>
                             <p class="view-status">{{item.texts}}</p>
                         </div>
-                    </a>
                 </li>
             </ul>
         </div>

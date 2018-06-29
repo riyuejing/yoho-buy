@@ -16,7 +16,7 @@
         </a>
         <span class="cartfoot" href="javascript:;">
             <div class="num-incart" :class="{'class-a':isA,'class-b':!isA}" @click="getShow">
-                <i class="iconfont icon-shoucang-copy styli"></i>
+                <i class="iconfont icon-shoucang styli"></i>
             </div>
             <div class="tip" style="color: rgb(204,204,204)">收藏</div>
         </span>
