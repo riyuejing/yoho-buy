@@ -51,7 +51,7 @@
                 typepwd:"password",
                 forgetBox:false,
                 selected:'+86',
-                res:{}
+                yesloginres:{}
             }
         },
         computed:{
@@ -85,9 +85,18 @@
                     username:this.selected+this.username,
                     password:this.password
                 }).then(({data})=>{
-                    this.res = data;
-                    if(this.res.errorcode == 0){
-                        this.$router.go(-1);
+                    this.yesloginres = data;
+                    //console.log(this.yesloginres);
+                    let obj = {
+                        username: this.yesloginres.data.nickname,
+                    //     userId: data.data._id,
+                    };
+                    // if(data.data.phoneNumber){
+                    //     obj.nickname=data.data.phoneNumber;
+                    // }
+                    this.$store.commit('setStorage',obj);
+                    if(this.yesloginres.errorcode == 0){
+                        this.$router.push("/personalCenter");
                     }
                 })
             },

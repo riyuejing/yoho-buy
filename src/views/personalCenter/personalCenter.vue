@@ -1,17 +1,26 @@
 <template>
     <div class="wrap">
-        <title-top title="个人中心"></title-top>
+        <title-top title="个人中心">{{username}}</title-top>
         <div class="bgtop">
-            <div class="login-btn">
+            <p class="logonaem">LifeStyle</p>
+            <div class="login-btn" v-if='!username'>
                 <router-link to="/signIn">登录 /</router-link>
                 <router-link to="/signUp"> 注册</router-link>
+            </div>
+            <div class="nickname">
+                <img src="./logo.jpg" alt="lifestyle">
+                <p>
+                    {{username}}
+                </p>
             </div>
         </div>
         <div class="order">
             <div class="otitle">
                 我的订单
-                <i class="iconfont icon-jiantou"></i>
-                <span>全部订单</span>
+                <router-link tag="span" to="/personalCenter/orders">
+                    全部订单
+                    <i class="iconfont icon-jiantou"></i>
+                </router-link>
             </div>
             <ul class="line">
                 <li>
@@ -85,16 +94,51 @@
         name: "personalCenter",
         components:{
             TitleTop
+        },
+        data(){
+            return{
+                username:''
+            }
+        },
+        mounted(){
+            this.username = localStorage.username;
+            //console.log(this.username);
         }
     }
 </script>
 
 <style lang="less" scoped>
     @import './iconfont.css';
+    .nickname{
+        img{
+            float:left;
+            width: 2.5rem;
+            height: 2.5rem;
+        }
+        p{
+            margin-left:0.5rem;
+            float:left;
+            height: 2.5rem;
+            line-height:2.56rem;
+
+        }
+        width:23rem;
+        position:absolute;
+        top:3rem;
+        font-size: 18px;
+        left: 1rem;
+        color:#fff;
+    }
     .wrap{
         background-color: #EFF0EF;
     }
     .bgtop{
+        .logonaem{
+            color:#fff;
+            position: relative;
+            bottom: -1.35rem;
+            left: 0.3rem;
+        }
         box-sizing: border-box;
         width: 100%;
         padding: 1.15rem 0 1.45rem;
