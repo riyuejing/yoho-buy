@@ -57,7 +57,7 @@
                 this.forclass = "ul"+_index;
                 //判断是否有下级
                 if(item.secondClass == ''){
-                    setInterval(()=>{
+                    setTimeout(()=>{
                         Bus.$emit("primaryClass",item.primaryClass);
                     },1000);
                     this.theQuery = item.primaryClass;
@@ -74,7 +74,7 @@
                 return "ul"+index1;
             },
             toList(_name){
-                setInterval(()=>{
+                setTimeout(()=>{
                     Bus.$emit("secondclass",_name);
                 },500)
                 this.theQuery = _name;

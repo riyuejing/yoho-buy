@@ -40,7 +40,7 @@
         },
         methods:{
             toList(obj,_index){
-                setInterval(()=>{
+                setTimeout(()=>{
                     Bus.$emit("indexsecondclass",obj.secondclass);
                 },500);
                 this.$router.push({
