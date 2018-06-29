@@ -2,15 +2,15 @@
     <div class="wrap">
         <title-top title="个人中心">{{username}}</title-top>
         <div class="bgtop">
+            <img src="./logo.jpg" alt="lifestyle" class="logojpg">
             <p class="logonaem">LifeStyle</p>
             <div class="login-btn" v-if='!username'>
                 <router-link to="/signIn">登录 /</router-link>
                 <router-link to="/signUp"> 注册</router-link>
             </div>
-            <div class="nickname">
-                <img src="./logo.jpg" alt="lifestyle">
+            <div class="nickname" v-show="ann">
                 <p>
-                    {{username}}
+                    {{ann}}
                 </p>
             </div>
         </div>
@@ -85,36 +85,55 @@
         </div>
         <div class="chao"></div>
         <div class="forwechat"></div>
+        <bottom-line></bottom-line>
     </div>
 </template>
 
 <script>
+    import {mapState} from 'vuex'
+    import BottomLine from '../../components/common/footerTwo';
     import TitleTop from '../../components/common/titleTop'
     export default {
         name: "personalCenter",
         components:{
-            TitleTop
+            TitleTop,BottomLine
+        },
+        computed:{
+            ...mapState(['username']),
+            ann(){
+                this.aname = this.username;
+                return this.aname;
+            },
         },
         data(){
             return{
-                username:''
+                // username:'',
+                aname:''
             }
         },
         mounted(){
-            this.username = localStorage.username;
-            //console.log(this.username);
+            // this.username = localStorage.username;
         }
     }
 </script>
 
 <style lang="less" scoped>
     /*@import './iconfont.css';*/
+    .logojpg{
+        float:left;
+        width: 2.5rem;
+        height: 2.5rem;
+        position:absolute;
+        top:3rem;
+        font-size: 18px;
+        left: 1rem;
+        color:#fff;
+    }
+    .footertwo{
+        margin-bottom: 0;
+    }
     .nickname{
-        img{
-            float:left;
-            width: 2.5rem;
-            height: 2.5rem;
-        }
+
         p{
             margin-left:0.5rem;
             float:left;
@@ -126,7 +145,7 @@
         position:absolute;
         top:3rem;
         font-size: 18px;
-        left: 1rem;
+        left: 3.5rem;
         color:#fff;
     }
     .wrap{

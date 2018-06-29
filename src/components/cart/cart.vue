@@ -1,12 +1,12 @@
 <template>
     <div>
         <div class="title-top">
-            <span class="iconfont icon-fanhui back" @click="goToLast"></span>
+            <span class="iconfont icon-iconfontyoujiantou back" @click="goToLast"></span>
             <h2>购物车</h2>
             <span class="iconviewlist" @click="edit">{{changetext}}</span>
         </div>
         <!--先判断是否登录了 -->
-        <div v-if="data.data.errorcode==1">
+        <div v-if="!username">
             <!-- 购物车内容 -->
             <div class="unregistered">
                 <!-- 请先登录 -->
@@ -18,15 +18,14 @@
                 <!-- 购物车 -->
                 <div class="unregistered-cart">
                     <div>
-                        <i class="iconfont icon-gouwuche"></i>
                         <p>您的购物车暂无商品</p>
                         <a href="/index">随便逛逛</a>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div v-if="data.status==200">
+<!--内容-->
+        <div v-if="data.data">
             <div class="confrimdelete" v-if="isBox">
                 <div class="box" @click="isBox = false">
                     <div class="boxtop">您确定要从购物车中删除么</div>
@@ -51,7 +50,7 @@
                     </div>
                     <div class="btn-jiesuan" v-if="!isModify" @click="toJieSuan">结算</div>
                     <div class="btn-jiesuan shoucang" v-if="isModify" @click="shoucang">移入收藏夹</div>
-                    <div class="btn-jiesuan" v-if="isModify" @click="isBox = !isBox">删除</div>
+                    <div class="btn-jiesuan" v-if="isModify" @click="shuanchudetishi">删除</div>
                 </div>
             </div>
             <div>
@@ -77,7 +76,7 @@
                         </div>
 
                         <div class="con">
-                            <img :src="item.goodsImgs[0]" :alt="item.goodsName" @click="goTo(item,index)">
+                            <img :src="item.goodsImgs[0]" :alt="item.goodsName" @click="goToDetail(item,index)">
                             <div class="des-text">
                                 <div v-if="!isModify">
                                     <p class="itemname">{{item.goodsName}}</p>
@@ -110,9 +109,9 @@
                 <p  class="xinpin">为你优选新品</p>
                 <ul class="list-con">
                     <li v-for="item in list" :class="getClass(item.goodsId)">
-                        <img :src="(item.goodsImgs)[0]" :alt="item.goodsName">
+                        <img :src="(item.goodsImgs)[0]" :alt="item.goodsName" @click="goToDetail(item,index)">
                         <div class="desdetail">
-                            <p class="prosname">{{item.goodsName}}</p >
+                            <p class="prosname" @click="goToDetail(item,index)">{{item.goodsName}}</p >
                             <p class="aboutprice">
                                 <span class="cuprice" :class="{'cuprice2':item.goodsPrice.oldprice}">{{item.goodsPrice.currentPrice | price}}</span>
                                 <span v-if="item.goodsPrice.oldprice" class="oldprice">{{item.goodsPrice.oldprice | price}}</span>
@@ -133,7 +132,7 @@
             <div class="choose" v-if="chooseAgain">
                 <div class="con">
                     <div class="p1">
-                        <img :src="goodsMsg.goodsImgs[0]" :alt="goodsMsg.goodsName">
+                        <img :src="goodsMsg.goodsImgs[0]" :alt="goodsMsg.goodsName" @click="goToDetail(item,index)">
                         <div>
                             <p>{{goodsMsg.goodsPrice.currentPrice | price}}</p>
                             <p v-show="pleChCo">请选择颜色、尺码</p>
@@ -223,14 +222,18 @@ export default {
         ...mapState({
             msg:(state)=>state.items
         }),
+        ...mapState(['username']),
         //千万不能用箭头函数
         total(){
             var totalPrice = 0;
-            this.data.data.forEach(function(goods){
-                if(!goods.isSelect){
-                    totalPrice +=goods.goodsPrice.currentPrice*goods.count;
-                }
-            });
+            if(typeof(this.data.data) == 'Array'){
+                this.data.data.forEach(function(goods){
+                    if(!goods.isSelect){
+                        totalPrice +=goods.goodsPrice.currentPrice*goods.count;
+                    }
+                });
+            }
+
             if(0<=totalPrice&&totalPrice<299){
                 //再满可免
                 this.could = true;
@@ -246,12 +249,15 @@ export default {
         },
         totalCount(){
             let totalcount = 0;
-            this.data.data.forEach(function(goods){
-                goods.count = goods.count - 0;
-                if(!goods.isSelect){
-                    totalcount += goods.count;
-                }
-            });
+            if(typeof(this.data.data) == 'Array'){
+                this.data.data.forEach(function(goods){
+                    goods.count = goods.count - 0;
+                    if(!goods.isSelect){
+                        totalcount += goods.count;
+                    }
+                });
+            }
+
             return totalcount;
         },
         changetext(){
@@ -264,14 +270,17 @@ export default {
 
         },
         selectNum(){
-            let num = 0;
-            this.data.data.forEach((goods)=>{
-                if(!goods.isSelect){
-                    num++;
-                }
+            if(typeof(this.data.data) == 'Array'){
+                let num = 0;
+                this.data.data.forEach((goods)=>{
+                    if(!goods.isSelect){
+                        num++;
+                    }
 
-            });
-            return num;
+                });
+                return num;
+            }
+
         }
     },
     mounted(){
@@ -281,13 +290,30 @@ export default {
     created(){
         this.$http.get('/api/user/getCart').then((data)=>{
             this.data = data;
-            //console.log(this.data);
+            //console.log(this.data,this.data.data.errorcode);
         });
         this.$http.get('/api/goods/new-goods').then(({data})=>{
             this.list = data;
         });
     },
     methods:{
+        //去详情
+        goToDetail(obj,_index){
+            console.log(1111);
+            this.$router.push('/product');
+            this.$store.commit('detailId',obj.goodsId);
+            console.log(obj.goodsId);
+        },
+        shuanchudetishi(){
+            if(this.selectNum <= 0){
+                $('.atLeast').show();
+                setInterval(function(){
+                    $('.atLeast').hide();
+                },1000);
+            }else{
+                this.isBox = !this.isBox;
+            }
+        },
         toJieSuan(){
             this.$router.push('/personalCenter/orders');
         },
@@ -342,12 +368,6 @@ export default {
         goToLast(){
             this.$router.go(-1);
         },
-        goTo(obj){
-            this.$router.push({
-                path:'/product',
-
-            })
-        },
         //重新选取数据
         changecount(val){
             if(this.changenum == 1 && val == -1){
@@ -372,106 +392,114 @@ export default {
             }
         },
         edit(){
-           this.isModify = !this.isModify;
-           // console.log(this.isModify);
-            //弹出来了
-            if(this.isModify){
-                this.isSelectAll = false;
-                this.data.data.forEach((good)=>{
-                    if(good.isSelect == undefined){
-                        this.$set(good,"isSelect",true);
+            if(this.username){
+                this.isModify = !this.isModify;
+                // console.log(this.isModify);
+                //弹出来了
+                if(typeof(this.data.data) == 'Array'){
+                    this.isSelectAll = false;
+                    this.data.data.forEach((good)=>{
+                        if(good.isSelect == undefined){
+                            this.$set(good,"isSelect",true);
+                        }else{
+                            good.isSelect = true;
+                        }
+                    })
+                }else{
+                    //弹出的消失
+                    if(typeof(this.data.data) == 'Array'){
+                        this.isSelectAll = true;
+                        this.data.data.forEach((good)=>{
+                            if(good.isSelect == undefined){
+                                this.$set(good,"isSelect",false);
+                            }else{
+                                good.isSelect = false;
+                            }
+                        })
                     }
-                })
-            }else{
-                //弹出的消失
-                this.isSelectAll = true;
-                this.data.data.forEach((good)=>{
-                    if(good.isSelect == undefined){
-                        this.$set(good,"isSelect",false);
-                    }
-                })
+
+                }
+
             }
+
 
         },
         //收藏
         shoucang(){
-            this.data.data.forEach(function(goods){
-                //true没有被选中的,如果没有选中的,如果没有false
-                if(!goods.isSelect){
-                    //有选中的进行收藏 传到后台
-                    this.$http.get('/api/user/addCollection',{
-                        params:{
-                            goodsid:goods.goodsId
-                        }
-                    });
-                    //console.log(goods);
-                    $('.islike').show();
-                    setInterval(function(){
-                        $('.islike').hide();
-                    },1000);
-                }else{
-                    //没有选中的 弹出至少选一个商品的弹框
+            if(typeof(this.data.data) == 'Array'){
+                if(this.selectNum <= 0){
                     $('.atLeast').show();
                     setInterval(function(){
                         $('.atLeast').hide();
                     },1000);
                 }
-            });
-
-
-
+                var arr2 = [];
+                this.data.data.forEach((goods) => {
+                    //true没有被选中的,如果没有选中的,如果没有false
+                    // if(this.selectNum>0)
+                    if(!goods.isSelect){
+                        //有选中的进行收藏 传到后台
+                        this.$http.get('/api/user/addCollection',{
+                            params:{
+                                goodsid:goods.goodsId
+                            }
+                        });
+                        //console.log(goods);
+                        $('.islike').show();
+                        setInterval(function(){
+                            $('.islike').hide();
+                        },1000);
+                    }else{
+                        //没有选中的 弹出至少选一个商品的弹框
+                        $('.atLeast').show();
+                        setInterval(function(){
+                            $('.atLeast').hide();
+                        },1000);
+                    }
+                });
+            }
         },
         //删除
         delGood(){
-            console.log(this.selectNum);
-            // console.log(this.data.data);
-            if(this.selectNum <= 0){
-                $('.atLeast').show();
-                setInterval(function(){
-                    $('.atLeast').hide();
-                },1000);
-            }
-            var arr = [];
-            this.data.data.forEach((goods) => {
-                console.log(goods.isSelect);
-                if(goods.isSelect){
-                    arr.push(goods);
+            if(typeof(this.data.data) == 'Array'){
+                console.log(this.selectNum);
+                // console.log(this.data.data);
+                if(this.selectNum <= 0){
+                    $('.atLeast').show();
+                    setInterval(function(){
+                        $('.atLeast').hide();
+                    },1000);
                 }
 
-            })
+                var arr = [];
 
-            console.log(arr);
-            this.data.data = arr;
-            // this.data.data = this.data.data.map((goods)=>{
-            //     //true没有被选中的,选出没有被选中的,然后替换到现在的data中
-            //     //选中的并且按了按钮 向后头发送选中的信息
-            //     // this.$http.get('api//user/removeCart',{
-            //     //     params:{
-            //     //         goodsid:goods.goodsId,
-            //     //         size:goods.size,
-            //     //         color:goods.color,
-            //     //         count:goods.count
-            //     //     }
-            //     // })
-            //     // if(goods.isSelect){
-            //     //     return goods;
-            //     // }
-            //     console.log(goods);
-            // });
+                this.data.data.forEach((goods) => {
+                   // console.log(goods.isSelect);
+                    if(goods.isSelect){
+                        arr.push(goods);
+                    }
+
+                })
+                //console.log(arr);
+                this.data.data = arr;
+            }
+
         },
         isCheckAll(){
             var flag = true;
-            this.data.data.forEach((goods)=>{
-                //isSelect为true的话实际上是未选中 只要有未选中的就不是全选
-                if(goods.isSelect){
-                    flag = false;
+            if(typeof(this.data.data) == 'Array'){
+                this.data.data.forEach((goods)=>{
+                    //isSelect为true的话实际上是未选中 只要有未选中的就不是全选
+                    if(goods.isSelect){
+                        flag = false;
+                    }
+                });
+                //isSelectAll,true是选中
+                if(!flag){
+                    this.isSelectAll = false;
+                }else{
+                    this.isSelectAll = true;
                 }
-            });
-            //isSelectAll,true是选中
-            if(!flag){
-                this.isSelectAll = false;
-            }else{
-                this.isSelectAll = true;
             }
         },
         select(obj,index){
@@ -485,18 +513,21 @@ export default {
         },
         //底部的全选与非全选
         aboutSelectAll(){
-            //如果item.isSelectAll为true可以设置 this.isSelectAll
-            if(!this.isSelectAll){
-                this.isSelectAll = true;
-                this.data.data.forEach((goods)=>{
-                    goods.isSelect = false;
-                });
-            }else{
-                this.isSelectAll = false;
-                this.data.data.forEach((good)=>{
-                    good.isSelect = true;
-                })
+            if(typeof(this.data.data) == 'Array'){
+                //如果item.isSelectAll为true可以设置 this.isSelectAll
+                if(!this.isSelectAll){
+                    this.isSelectAll = true;
+                    this.data.data.forEach((goods)=>{
+                        goods.isSelect = false;
+                    });
+                }else{
+                    this.isSelectAll = false;
+                    this.data.data.forEach((good)=>{
+                        good.isSelect = true;
+                    })
+                }
             }
+
 
         },
         getClass(_id){
@@ -520,7 +551,7 @@ export default {
 </script>
 
 <style scoped lang="less">
-/*@import './iconfont.css';*/
+@import './iconfont.css';
 @import '../common/list/list';
 //请至少选择一件商品
 .atLeast,.islike,.iszero{
@@ -774,7 +805,9 @@ export default {
     font-size:.575rem;
     width:100%;
     height: 3rem;
-    padding: 0.45rem;
+    padding-top:0.45rem;
+    padding-right:0.45rem;
+    /*padding: 0.45rem;*/
     box-sizing: border-box;
     position:fixed;
     left:0;
