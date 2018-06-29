@@ -226,13 +226,11 @@ export default {
         //千万不能用箭头函数
         total(){
             var totalPrice = 0;
-            if(typeof(this.data.data) == 'Array'){
                 this.data.data.forEach(function(goods){
                     if(!goods.isSelect){
                         totalPrice +=goods.goodsPrice.currentPrice*goods.count;
                     }
                 });
-            }
 
             if(0<=totalPrice&&totalPrice<299){
                 //再满可免
@@ -249,14 +247,12 @@ export default {
         },
         totalCount(){
             let totalcount = 0;
-            if(typeof(this.data.data) == 'Array'){
                 this.data.data.forEach(function(goods){
                     goods.count = goods.count - 0;
                     if(!goods.isSelect){
                         totalcount += goods.count;
                     }
                 });
-            }
 
             return totalcount;
         },
@@ -270,7 +266,6 @@ export default {
 
         },
         selectNum(){
-            if(typeof(this.data.data) == 'Array'){
                 let num = 0;
                 this.data.data.forEach((goods)=>{
                     if(!goods.isSelect){
@@ -279,7 +274,6 @@ export default {
 
                 });
                 return num;
-            }
 
         }
     },
@@ -299,7 +293,7 @@ export default {
     methods:{
         //去详情
         goToDetail(obj,_index){
-            console.log(1111);
+            //console.log(1111);
             this.$router.push('/product');
             this.$store.commit('detailId',obj.goodsId);
             console.log(obj.goodsId);
@@ -313,9 +307,6 @@ export default {
             }else{
                 this.isBox = !this.isBox;
             }
-        },
-        toJieSuan(){
-            this.$router.push('/personalCenter/orders');
         },
         //数量重新做选择
         getGoodsMsg(obj,_index){
@@ -392,48 +383,40 @@ export default {
             }
         },
         edit(){
-            if(this.username){
-                this.isModify = !this.isModify;
-                // console.log(this.isModify);
-                //弹出来了
-                if(typeof(this.data.data) == 'Array'){
+
+                if(!this.isModify){
                     this.isSelectAll = false;
                     this.data.data.forEach((good)=>{
                         if(good.isSelect == undefined){
+                            // good.isSelect = true;
                             this.$set(good,"isSelect",true);
                         }else{
-                            good.isSelect = true;
+                            good.isSelect = !good.isSelect;
                         }
                     })
                 }else{
                     //弹出的消失
-                    if(typeof(this.data.data) == 'Array'){
-                        this.isSelectAll = true;
-                        this.data.data.forEach((good)=>{
-                            if(good.isSelect == undefined){
-                                this.$set(good,"isSelect",false);
-                            }else{
-                                good.isSelect = false;
-                            }
-                        })
-                    }
-
+                    this.isSelectAll = true;
+                    this.data.data.forEach((good)=>{
+                        if(good.isSelect == undefined){
+                            this.$set(good,"isSelect",false);
+                        }else{
+                            good.isSelect = !good.isSelect;
+                        }
+                    })
                 }
-
-            }
+            this.isModify = !this.isModify;
 
 
         },
         //收藏
         shoucang(){
-            if(typeof(this.data.data) == 'Array'){
                 if(this.selectNum <= 0){
                     $('.atLeast').show();
                     setInterval(function(){
                         $('.atLeast').hide();
                     },1000);
                 }
-                var arr2 = [];
                 this.data.data.forEach((goods) => {
                     //true没有被选中的,如果没有选中的,如果没有false
                     // if(this.selectNum>0)
@@ -457,11 +440,34 @@ export default {
                         },1000);
                     }
                 });
-            }
+        },
+        //结算
+        toJieSuan(){
+                if(this.selectNum <= 0){
+                    $('.atLeast').show();
+                    setInterval(function(){
+                        $('.atLeast').hide();
+                    },1000);
+                }
+                var arr = [];
+
+                this.data.data.forEach((goods) => {
+                    // console.log(goods.isSelect);
+                    if(goods.isSelect){
+                        arr.push(goods);
+                    }
+
+                })
+                //console.log(arr);
+                this.data.data = arr;
+
+                this.$http.get('api/user/buy').then(({data}) => {
+                    console.log(data);
+                })
+            //this.$router.push('/personalCenter/orders');
         },
         //删除
         delGood(){
-            if(typeof(this.data.data) == 'Array'){
                 console.log(this.selectNum);
                 // console.log(this.data.data);
                 if(this.selectNum <= 0){
@@ -482,12 +488,10 @@ export default {
                 })
                 //console.log(arr);
                 this.data.data = arr;
-            }
 
         },
         isCheckAll(){
             var flag = true;
-            if(typeof(this.data.data) == 'Array'){
                 this.data.data.forEach((goods)=>{
                     //isSelect为true的话实际上是未选中 只要有未选中的就不是全选
                     if(goods.isSelect){
@@ -500,7 +504,6 @@ export default {
                 }else{
                     this.isSelectAll = true;
                 }
-            }
         },
         select(obj,index){
             if(obj.isSelect == undefined){
@@ -513,7 +516,6 @@ export default {
         },
         //底部的全选与非全选
         aboutSelectAll(){
-            if(typeof(this.data.data) == 'Array'){
                 //如果item.isSelectAll为true可以设置 this.isSelectAll
                 if(!this.isSelectAll){
                     this.isSelectAll = true;
@@ -526,7 +528,6 @@ export default {
                         good.isSelect = true;
                     })
                 }
-            }
 
 
         },
@@ -551,7 +552,6 @@ export default {
 </script>
 
 <style scoped lang="less">
-// @import './iconfont.css';
 @import '../common/list/list';
 //请至少选择一件商品
 .atLeast,.islike,.iszero{
