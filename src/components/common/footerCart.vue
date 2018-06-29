@@ -55,7 +55,6 @@
         box-sizing: border-box;
         padding: .5rem .7rem;
         width: 16rem;
-        height: 3rem;
         border-top:1px solid #e0e0e0;
         background-color: #fff;
         vertical-align: middle;

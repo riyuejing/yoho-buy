@@ -2,7 +2,7 @@
   <div class="wrap">
     <order-title title="我的订单"></order-title>
     <a class="fraud-tip" href="javascript:void(0)">
-      <i class="iconfont icon-icon"></i>
+      <i class="iconfont icon-youjiantou"></i>
       <span class="tip-title">
         <i class="iconfont icon-jinggao-copy"></i>
         关于防诈骗的重要提醒
@@ -108,7 +108,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "https://at.alicdn.com/t/font_724863_t8zb35lbi1.css";
 img {
   display: block;
   margin: 0 auto;
@@ -126,7 +125,7 @@ img {
   padding: 0.5rem 0.75rem;
   margin-bottom: 0.5rem;
   border-bottom: 1px solid #e0e0e0;
-  > .iconfont {
+  >.iconfont {
     display: block;
     color: #b0b0b0;
     float: right;

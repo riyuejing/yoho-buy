@@ -17,15 +17,10 @@
         <div class="order">
             <div class="otitle">
                 我的订单
-<<<<<<< HEAD
-                <i class="iconfont icon-youjiantou"></i>
-                <span>全部订单</span>
-=======
                 <router-link tag="span" to="/personalCenter/orders">
                     全部订单
-                    <i class="iconfont icon-jiantou"></i>
+                    <i class="iconfont icon-youjiantou"></i>
                 </router-link>
->>>>>>> d2095efbe13a117b0e2b74cdddb135295ac19ae6
             </div>
             <ul class="line">
                 <li>
