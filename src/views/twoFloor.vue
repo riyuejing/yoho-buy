@@ -34,19 +34,19 @@
                     {src:"http://img11.static.yhbimg.com/yhb-img01/2017/12/14/09/01c71898e13ad3f3eb2d19b24306190346.jpg?imageView2/2/w/140/h/140/q/60", secondclass:"文具杂志"},
                     {src:"http://img11.static.yhbimg.com/yhb-img01/2017/12/14/09/01cc0885e4f52ebb40f16352492774bd81.jpg?imageView2/2/w/140/h/140/q/60", secondclass:"家纺"},
                     {src:"http://img11.static.yhbimg.com/yhb-img01/2017/12/14/09/013ad8179f744ee9feb4f3e298c0c5461d.jpg?imageView2/2/w/140/h/140/q/60", secondclass:"体育用品"},
-                    {src:"http://img10.static.yhbimg.com/yhb-img01/2017/12/14/09/014fc393ff172e178be9c797d61ad4d15e.jpg?imageView2/2/w/140/h/140/q/60", secondclass:"家装软饰"}
+                    {src:"http://img10.static.yhbimg.com/yhb-img01/2017/12/14/09/014fc393ff172e178be9c797d61ad4d15e.jpg?imageView2/2/w/140/h/140/q/60", secondclass:"家装软饰"}//为什么写成中文?
                 ]
             }
         },
         methods:{
             toList(obj,_index){
                 setInterval(()=>{
-                    Bus.$emit("indexsecondclass",obj.secondclass);
-                },500);
+                    Bus.$emit("indexsecondclass",obj.secondclass);//第一个参数是什么？
+                },500);//为什么用计时器
                 this.$router.push({
-                    path:'/list',
+                    path:'/list',//为什么是list?
                     query: {
-                        from: "cate",
+                        from: "cate",//为什么是cate?
                         query: obj.secondclass
                     }
                 })

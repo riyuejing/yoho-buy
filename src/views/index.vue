@@ -29,14 +29,6 @@
 
             <third-floor></third-floor>
         </div>
-        <!--新客专享-->
-        <!--<div>-->
-            <!--<div class="floorTitle">-->
-                <!--<h2>新客专享</h2>-->
-            <!--</div>-->
-            <!--<ul style="height: 305px"></ul>-->
-        <!--</div>-->
-        <!--人气单品排行-->
         <div>
             <div class="floorTitle" style="position: relative">
                 <h2 style="display: inline-block">人气单品排行</h2>

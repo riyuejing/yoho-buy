@@ -105,7 +105,7 @@
                     <div class="wall"></div>
                 </li>
                 <li>
-                    <a href="javascript:;">店铺简介</a>
+                    <a href="http://localhost:8080/shopintrotwo">店铺简介</a>
                 </li>
             </ul>
         </div>

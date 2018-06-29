@@ -19,6 +19,9 @@ import Coupons from './views/OneFloorPart/coupons'//查看我优惠券页
 import TOIS from './views/thirdFloorPart/TOIS' //热门品牌中TOIS
 import HotBrand from './views/thirdFloorPart/hotBrandShuff' //热门品牌中Cheett
 import BNS from './views/thirdFloorPart/BSN' //热门品牌中BNS
+import ShopIntro1 from './views/thirdFloorPart/ShopIntroTotal/shopIntro1'//TOIS店铺介绍
+import ShopIntro2 from './views/thirdFloorPart/ShopIntroTotal/shopIntro2'//TOIS店铺介绍
+import ShopIntro3 from './views/thirdFloorPart/ShopIntroTotal/shopIntro3'//TOIS店铺介绍
 //caiyan
 import DetailPro from './components/detail_introduction/detail_introduce'
 import lifestyleBrands from './components/lifestyle_brands/lifestyle_brands'
@@ -139,13 +142,31 @@ export default new Router({
       {
         path:'/hotbrand',
         name:'hotBrandShuff',
-        component:HotBrand
+        component:HotBrand,
       },
       //热门品牌BSN
       {
         path:'/bns',
         name:'BNS',
         component:BNS
+      },
+      //TOIS店铺简介
+      {
+        path:'/shopintroone',
+        name:'shopIntro1',
+        component:ShopIntro1,
+      },
+      //Chett店铺简介
+      {
+          path:'/shopintrotwo',
+          name:'shopIntro2',
+          component:ShopIntro2,
+      },
+      //BSN店铺简介
+      {
+          path:'/shopintrothir',
+          name:'shopIntro3',
+          component:ShopIntro3,
       },
       //分类页面
       {
@@ -163,5 +184,5 @@ export default new Router({
         path:'/mylike',
           component:MyLike
       }
-          ]
-        })
+      ]
+})

@@ -7,7 +7,7 @@
         <div class="stockimg">
             <ul class="stock-img">
                 <li class="new-slide">
-                    <a href="" @click="changeNewpage">
+                    <a href="">
                         <router-link to="/stock/travel">
                             <img :src="piture.src" alt="">
                         </router-link>
@@ -39,16 +39,10 @@
                 piture: {
                     src: "http://img11.static.yhbimg.com/yhb-img01/2018/04/04/10/012bc76d4b7634c88ca4f322be25809567.jpg?imageView2/2/w/640/h/240/q/60"
                 },
-                travel:true,
             }
         },
         components:{
             TitleTop,
-        },
-        methods:{
-            changeNewpage(){
-                this.travel = false;
-            }
         }
     }
 </script>

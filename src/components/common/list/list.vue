@@ -44,7 +44,8 @@
                         <p class="prosname" @click="goToDetail(item,index)">{{item.goodsName}}</p>
                         <p class="aboutprice">
                             <span class="cuprice" :class="{'cuprice2':item.goodsPrice.oldprice}">{{item.goodsPrice.currentPrice | price}}</span>
-                            <span v-if="item.goodsPrice.oldprice" class="oldprice">{{item.goodsPrice.oldprice | price}}</span>
+                            <span v-if="item.goodsPrice.oldprice" class="oldprice">{{item.goodsPrice.oldprice | price}}
+                            </span>
                             <span class="formore" @click="isSimilar = !isSimilar">
                                 <i class="iconfont icon-htmal5icon26"></i>
                             </span>
