@@ -37,11 +37,11 @@
                 </li>
             </ul>
             <ul class="line">
-                <li>
+                <li @click="toMyLike">
                     <p class="num">0</p>
                     <p>商品收藏</p>
                 </li>
-                <li>
+                <li @click="toMyLike">
                     <p class="num">0</p>
                     <p>品牌收藏</p>
                 </li>
@@ -111,14 +111,15 @@
                 aname:''
             }
         },
-        mounted(){
-            // this.username = localStorage.username;
+        methods:{
+            toMyLike(){
+                this.$router.push('/mylike');
+            }
         }
     }
 </script>
 
 <style lang="less" scoped>
-    /*@import './iconfont.css';*/
     .logojpg{
         float:left;
         width: 2.5rem;

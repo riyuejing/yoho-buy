@@ -6,14 +6,15 @@
             <p :class="{tabcolor:isClick}" @click="isClick = !isClick">收藏的品牌</p>
         </div>
         <div class="con" ref="lis" v-show="lisData">
-            <ul>
-                <li v-for="item in lisData">
-                    <img class="proimg" :src="item.goodsImgs[0]"/>
+            <ul v-show="lisData">
+                <li v-for="(item,index) in lisData">
+                    <img class="proimg" :src="item.goodsImgs[0]" @click="goToDetail(item,index)">
                     <div class="text">
                         <p>{{item.goodsName}}</p>
                         <p>
-                            <span class="redprice" v-if="item.goodsPrice.currentPrice">{{item.goodsPrice.currentPrice}}</span>
-                            <span class="oldprice" v-if="item.goodsPrice.oldPrice">{{item.goodsPrice.oldPrice}}</span>
+                            <span class="redprice" v-if="item.goodsPrice.currentPrice">{{item.goodsPrice
+                                .currentPrice|price}}</span>
+                            <span class="oldprice" v-if="item.goodsPrice.oldPrice">{{item.goodsPrice.oldPrice|price}}</span>
                         </p>
                     </div>
                 </li>
@@ -32,7 +33,6 @@
 </template>
 
 <script>
-    import BScroll from 'better-scroll'
     import TitleTop from '../components/common/titleTop'
     import FooterBottom from '../components/common/footerTwo'
     export default {
@@ -46,15 +46,27 @@
         components:{
             TitleTop,FooterBottom
         },
+        methods:{
+            goToDetail(obj,_index){
+                this.$router.push('/product');
+                this.$store.commit('detailId',obj.goodsId);
+                //console.log(obj.goodsId);
+            }
+        },
         created(){
             this.$http.get('/api/user/getCollections').then(({data}) => {
                 this.lisData = data;
-                console.log(this.lisData);
+                //console.log(this.lisData);
             })
             // this.$nextTick(function() {
             //     let listBscroll = new BScroll(this.refs.lis,{click:true});
             // })
         },
+        filters:{
+            price(money){
+                return "¥"+money.toFixed(2);
+            }
+        }
     }
 </script>
 
@@ -69,7 +81,6 @@
     div.con{
         position:absolute;
         top:5.1275rem;
-        bottom:6rem;
         width:100%;
         li{
             overflow: hidden;
