@@ -12,8 +12,7 @@
                     <!--没收藏 class-b siA = true-->
                     <div class="not-collect" :class="{'class-a':isA,'class-b':!isA}" @click="getShow">
                         <i class="iconfont icon-shoucang-copy styli"></i>
-                        <!--<span class="shouc1" @click="changeStatus">{{btnStatus?'收藏':'已收藏'}}</span>-->
-                        <span class="shouc1" @click="changeStatus">{'btnStatus':istext,'btnNoStatus':!istext}</span>
+                        <span class="shouc1" @click="changeStatus">{{btnStatus?'收藏':'已收藏'}}</span>
                         <div class="already" :class="{'chuxian':isB,'xiaoshi':!isB}">{{shouc?'店铺收藏成功':'店铺取消收藏'}}</div>
                     </div>
 
@@ -107,7 +106,7 @@
                 likemsg:{},
                 isLike:false,
                 isA:false,
-                istext:true,
+                btnStatus:true,
                 isShow:false,
                 shouc:false,
                 isB:false,
@@ -139,7 +138,6 @@
                     }).then(({data})=>{
                         this.likemsg = data;
                         if(this.likemsg.errorcode == 1){
-                            this.istext.html('收藏');
                             //弹框 请您先登录
                             $('.tips').show();
                             setInterval(function () {
@@ -147,7 +145,6 @@
                             },2000)
                         }else {
                             this.isA=!this.isA;
-                            this.istext.html('已收藏');
                             this.shouc = !this.shouc;
                             $('.already').show();
                             setInterval(function () {
@@ -168,9 +165,7 @@
                 this.isB = !this.isB;
             },
             changeStatus(){
-                this.istext = !this.istext;
-
-                jdk
+                this.btnStatus=this.btnStatus?false:true;
 
             },
             showToggle(){
