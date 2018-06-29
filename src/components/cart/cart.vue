@@ -293,7 +293,7 @@ export default {
     methods:{
         //去详情
         goToDetail(obj,_index){
-            console.log(1111);
+            //console.log(1111);
             this.$router.push('/product');
             this.$store.commit('detailId',obj.goodsId);
             console.log(obj.goodsId);

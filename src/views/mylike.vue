@@ -53,11 +53,14 @@
                 //console.log(obj.goodsId);
             }
         },
-        mounted(){
+        created(){
             this.$http.get('/api/user/getCollections').then(({data}) => {
                 this.lisData = data;
                 //console.log(this.lisData);
             })
+            // this.$nextTick(function() {
+            //     let listBscroll = new BScroll(this.refs.lis,{click:true});
+            // })
         },
         filters:{
             price(money){
