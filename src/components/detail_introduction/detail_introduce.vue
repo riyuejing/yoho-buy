@@ -82,7 +82,7 @@
                 <div class="learnmore">
                     <a href="###">
                         <span>查看更多</span>
-                        <i class="icon-keyboard_arrow_right"></i>
+                        <i class="icon-keyboard_arrow_right iconfont icon-icon"></i>
                     </a>
                 </div>
             </div>
@@ -104,7 +104,7 @@
              <div class="learnmore">
                     <a href="###">
                         <span>查看更多</span>
-                        <i class="icon-keyboard_arrow_right"></i>
+                        <i class="icon-keyboard_arrow_right icon-icon iconfont"></i>
                     </a>
                 </div>
         </div>
@@ -244,69 +244,26 @@
         <!-- 底部 -->
         <div class="cart-bar">
             <a class="bottom-cart">
-                <i class="icon-cart"></i>
+                <i class="icon-cart icon-gouwuche iconfont " ></i>
                 <p @click="toCart">购物车</p>
                 <p class="circle" v-if="showCircle" >{{amount}}</p>
             </a>
             <a href="/bns">
-                <i class="icon-home2"></i>
+                <i class="icon-home2 icon-index iconfont"></i>
                 <p>品牌商铺</p>
             </a>
             <a v-if="loveheart">
-                <i class="icon-favorite" @click="favorite" ref="favorite"></i>
+                <i class="icon-favorite icon-shoucang  iconfont" @click="favorite" ref="favorite"></i>
                 <p>收藏</p>
             </a>
             <a v-if="love">
-                <i class="icon-favorite-another icon-favorite" @click="favorite()" ref="favorite"   style="color:red" ></i>
+                <i class="icon-favorite-another icon-favorite icon-shoucang  iconfont" @click="favorite" ref="favorite"   style="color:red" ></i>
                 <p>收藏</p>
             </a>
             <a class="add-cart" @click="getGoodsMsg">
                <span class="enter">加入购物车</span>  
             </a>
         </div>
-        <!-- 加入购物车的页面 -->
-        <!--<div class="addcart-page" v-if="panel">-->
-            <!--<div  class="chose-panel"   >-->
-                <!--<div class="lookout" v-if="ingnorecolor">请选择颜色呐~</div>-->
-                <!--<div class="lookout"  v-if="ingnoresize">请选择尺寸呐~</div>-->
-                <!--<div class="lookout" v-if="ingnoretwo">请选择颜色和尺寸呐~</div>-->
-                <!--<div class="lookout" v-if="success">成功添加入购物车了呢~</div>-->
-                <!--&lt;!&ndash; 图片 &ndash;&gt;-->
-                <!--<div class="choose-wrap">-->
-                    <!--<img v-for="item in goodslist.goodsImgs"    :src="item"  alt="" style="width:4.1rem;min-height:5rem" >-->
-                    <!--<div class="choose">-->
-                        <!--<p v-if="goodslist.goodsPrice">¥{{goodslist.goodsPrice.currentPrice}}</p>-->
-                        <!--<p>请选择颜色,尺码</p>-->
-                        <!--<p>已经选择黑色，x</p>-->
-                        <!--<span class="remove" @click="isAdd()"></span>-->
-                    <!--</div>-->
-                <!--</div>-->
-               <!--&lt;!&ndash; 颜色 &ndash;&gt;-->
-                <!--<div class="color">-->
-                    <!--<span  v-if="colors"     class="color-name" :class="{change:colors-->
-                    <!--}">颜色 <span class="btn" @click="colorchange()">黑色</span></span>-->
-                    <!--<span v-if="color" class="color-name">颜色 <span class="btn" @click="colorchange()"  style="background:white;border:1px solid;color:black">黑色</span></span>-->
-                <!--</div>-->
-                <!--&lt;!&ndash; 尺码 &ndash;&gt;-->
-                <!--<div class="color">-->
-                    <!--<span class="color-name" v-if="sizes">尺码 <span  @click="sizechange()" class="btn btn1">x</span></span>-->
-                    <!--<span class="color-name" v-if="size" >尺码 <span  style="background:white;border:1px solid;color:black"   @click="sizechange()"  class="btn btn1">x</span></span>-->
-                <!--</div>-->
-              <!--&lt;!&ndash; 数量 &ndash;&gt;-->
-              <!--<div class="numbers">-->
-                  <!--<span class="number">数量</span>-->
-                  <!--<div>-->
-                      <!--<span class="delete" @click="del()">-</span>-->
-                      <!--<input  class="amount"   type="text"    disabled="1" v-model="amounts">-->
-                      <!--<span class="add" @click="amounts++">+</span>-->
-                  <!--</div>-->
-              <!--</div>-->
-              <!--<div class="btn-wrap">-->
-                  <!--<button class="buynow" >立即购买</button>-->
-                  <!--<button class="addCarts" @click="addcarts()" >加入购物车</button>-->
-              <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
         <!--弹出选择页面-->
         <div class="choose" v-if="chooseAgain">
             <div class="con">
@@ -527,7 +484,7 @@ export default {
           });
       },
       showIns(){
-          this.$router.push('order');
+          // this.$router.push('order');
       },
       //颜色尺寸的选择
       tabclick(obj,_index){
@@ -1095,7 +1052,7 @@ export default {
   box-sizing: border-box;
   padding: 0.5rem 0.7rem;
   width: 100%;
-  height: 3rem;
+  height: 5rem;
   border-top: 1px solid #e0e0e0;
   background-color: #fff;
   a {
@@ -1304,6 +1261,7 @@ export default {
         z-index:9999;
         bottom: 0;
         width: 100%;
+        height: 4.2rem;
         .buynow {
             width: 50%;
             height: 2.344rem;
