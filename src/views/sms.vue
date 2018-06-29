@@ -12,11 +12,11 @@
         <div class="sign-wrap">
             <div class="sign-form">
                 <div>
-                    <span class="iconfont icon-msnui-tel"></span>
+                    <span class="iconfont icon-shouji"></span>
                     <input type="tel" placeholder="请输入手机号/邮箱" v-model="username" class="tel-input" :checktel="checktel">
                 </div>
                 <div>
-                    <span class="iconfont icon-mima"></span>
+                    <span class="iconfont icon-suo"></span>
                     <input :type="typepwd" placeholder="请输入密码" v-model="password">
                     <span class="iconfont iconpwd" :class="showpwdicon" @click="toShowPwd"></span>
                 </div>
@@ -105,7 +105,7 @@
 </script>
 
 <style lang="less" scoped>
-    @import "./signUp/iconfont.css";
+    /*@import "./signUp/iconfont.css";*/
     .forget{
         width: 100%;
         height: 100%;

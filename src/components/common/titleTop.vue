@@ -1,17 +1,17 @@
 <template>
     <div>
         <div class="title-top">
-            <span class="iconfont icon-back back" @click="goToLast"></span>
+            <span class="iconfont icon-iconfontyoujiantou back" @click="goToLast"></span>
             <h2>{{title}}</h2>
-            <span class="iconfont icon-viewlist iconviewlist" @click="isShow = !isShow"></span>
+            <span class="iconfont icon-Viewlist iconviewlist" @click="isShow = !isShow"></span>
         </div>
         <div class="viewlist" v-show="isShow">
             <div class="triangle"></div>
             <ul class="l-icon">
-                <li class="iconfont icon-weibiaoti1"></li>
-                <li class="iconfont icon-leimupinleifenleileibie2"></li>
-                <li class="iconfont icon-htmal5icon29"></li>
-                <li class="iconfont icon-wodemian"></li>
+                <li class="iconfont icon-zhuye"></li>
+                <li class="iconfont icon-leimupinleifenleileibie1"></li>
+                <li class="iconfont icon-gouwuche"></li>
+                <li class="iconfont icon-kuajingzhifuicongeren"></li>
             </ul>
             <ul class="r-text">
                 <li >
@@ -54,7 +54,7 @@
 </script>
 
 <style lang="less" scoped>
-    @import '../../assets/fonts/iconfont.css';
+    /*@import '../../assets/fonts/iconfont.css';*/
     .iconfont{
         color: white;
     }

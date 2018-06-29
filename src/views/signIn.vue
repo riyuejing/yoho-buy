@@ -13,7 +13,7 @@
             <div class="sign-wrap">
                 <div class="sign-form">
                     <div>
-                        <span class="iconfont icon-msnui-tel"></span>
+                        <span class="iconfont icon-shouji"></span>
                         <select id="country" v-model="selected">
                             <option value="+61">澳大利亚</option>
                             <option value="+82">韩国</option>
@@ -28,7 +28,7 @@
                             <option value="+886">中国台湾</option>
                             <option value="+852">中国香港</option>
                         </select>
-                        <span class="iconfont icon-xiasanjiao"></span>
+                        <span class="iconfont icon-jiantou-"></span>
                         <input type="tel" placeholder="请输入手机号" v-model="username" class="tel-input" :checktel="checktel">
                     </div>
                     <div style="margin-bottom:0.5rem;">
@@ -123,7 +123,7 @@
 </script>
 
 <style lang="less" scoped>
-    @import './signUp/iconfont.css';
+    /*@import './signUp/iconfont.css';*/
     .forget{
         width: 100%;
         height: 100%;
@@ -223,7 +223,7 @@
                 font-size: .65rem;
                 margin-right: .75rem;
             }
-            .icon-xiasanjiao{
+            .icon-jiantou-{
                 font-size:.3rem;
                 padding-right: 3px;
                 border-right: 1px solid;

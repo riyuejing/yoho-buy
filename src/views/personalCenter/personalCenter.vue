@@ -17,20 +17,20 @@
         <div class="order">
             <div class="otitle">
                 我的订单
-                <i class="iconfont icon-jiantou"></i>
+                <i class="iconfont icon-youjiantou"></i>
                 <span>全部订单</span>
             </div>
             <ul class="line">
                 <li>
-                    <i class="iconfont icon-daifukuan01"></i>
+                    <i class="iconfont icon-ziyuan1"></i>
                     <p>待付款</p>
                 </li>
                 <li>
-                    <i class="iconfont icon-icon2"></i>
+                    <i class="iconfont icon-fenqiwodaifahuo"></i>
                     <p>待发货</p>
                 </li>
                 <li>
-                    <i class="iconfont icon-gerenzhongxindingdandaishouhuo"></i>
+                    <i class="iconfont icon-daishouhuo"></i>
                     <p>待收货</p>
                 </li>
             </ul>
@@ -54,30 +54,30 @@
                 <i class="iconfont icon-youhuiquan"></i>
                 <div class="m_text">
                     优惠券
-                    <span class="iconfont icon-jiantou"></span>
+                    <span class="iconfont icon-youjiantou"></span>
                 </div>
             </div>
             <div class="con-wrap">
-                <i style="font-size: 16px;" class="iconfont icon-y"></i>
+                <i style="font-size: 1.2rem;" class="iconfont icon-goumai"></i>
                 <div class="m_text hasy">
                     有货币
-                    <span class="iconfont icon-jiantou"></span>
+                    <span class="iconfont icon-youjiantou"></span>
                 </div>
             </div>
         </div>
         <div class="quan">
             <div class="con-wrap">
-                <i class="iconfont icon-xiaoxi"></i>
+                <i class="iconfont icon-p-message"></i>
                 <div class="m_text">
                     消息
-                    <span class="iconfont icon-jiantou"></span>
+                    <span class="iconfont icon-youjiantou"></span>
                 </div>
             </div>
             <div class="con-wrap">
                 <i class="iconfont icon-fuwuerji"></i>
                 <div class="m_text hasy">
                     服务与反馈
-                    <span class="iconfont icon-jiantou"></span>
+                    <span class="iconfont icon-youjiantou"></span>
                 </div>
             </div>
         </div>
@@ -106,7 +106,7 @@
 </script>
 
 <style lang="less" scoped>
-    @import './iconfont.css';
+    /*@import './iconfont.css';*/
     .nickname{
         img{
             float:left;
@@ -169,7 +169,7 @@
             padding: 0 0.95rem;
             height: 2rem;
             line-height:2rem;
-            .icon-jiantou{
+            .icon-youjiantou{
                 height: 2rem;
                 line-height:2rem;
                 float: right;
@@ -225,7 +225,7 @@
                 line-height: 2.2rem;
                 float: left;
                 border-bottom:1px solid #e0e0e0;
-                .icon-jiantou{
+                .icon-youjiantou{
                     height: 2.2rem;
                     line-height: 2.2rem;
                     margin-right: .75rem;

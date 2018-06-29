@@ -117,7 +117,7 @@
                                 <span class="cuprice" :class="{'cuprice2':item.goodsPrice.oldprice}">{{item.goodsPrice.currentPrice | price}}</span>
                                 <span v-if="item.goodsPrice.oldprice" class="oldprice">{{item.goodsPrice.oldprice | price}}</span>
                                 <span class="formore" @click="showSimilar(item)">
-                                <i class="iconfont icon-htmal5icon26"></i>
+                                <i class="iconfont icon-gengduo"></i>
                             </span>
                             </p >
                         </div>
@@ -520,7 +520,7 @@ export default {
 </script>
 
 <style scoped lang="less">
-@import './iconfont.css';
+/*@import './iconfont.css';*/
 @import '../common/list/list';
 //请至少选择一件商品
 .atLeast,.islike,.iszero{

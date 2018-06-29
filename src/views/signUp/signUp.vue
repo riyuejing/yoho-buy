@@ -1,12 +1,12 @@
 <template>
     <div class="signup-wrap">
         <div class="signup-title">
-            <span class="iconfont icon-fanhui" @click="goToLast"></span>
+            <span class="iconfont icon-fold" @click="goToLast"></span>
             <span>注册</span>
         </div>
         <div class="sign-form">
             <div>
-                <span class="iconfont icon-msnui-tel"></span>
+                <span class="iconfont icon-shouji"></span>
                 <select id="country" v-model="selected">
                     <option value="+61">澳大利亚</option>
                     <option value="+82">韩国</option>
@@ -21,16 +21,16 @@
                     <option value="+886">中国台湾</option>
                     <option value="+852">中国香港</option>
                 </select>
-                <span class="iconfont icon-xiasanjiao"></span>
+                <span class="iconfont icon-jiantou-"></span>
                 <input type="tel" placeholder="请输入手机号" v-model="username" class="tel-input" :checktel="checktel">
             </div>
             <div>
-                <span class="iconfont icon-mima"></span>
+                <span class="iconfont icon-suo"></span>
                 <input :type="typepwd" placeholder="请输入密码" v-model="password">
                 <span class="iconfont iconpwd" :class="showpwdicon" @click="toShowPwd"></span>
             </div>
             <div>
-                <span class="iconfont icon-mn_tianjiahaoyou_fill"></span>
+                <span class="iconfont icon-kuajingzhifuicongeren"></span>
                 <input type="text" v-model="friend_code" placeholder="好友潮口令 (非必填)">
             </div>
             <div style="margin-bottom:0.5rem;">
@@ -120,7 +120,7 @@
 </script>
 
 <style lang="less" scoped>
-    @import './iconfont.css';
+    /*@import './iconfont.css';*/
     .signup-wrap{
         box-sizing: border-box;
         width: 100%;
@@ -136,7 +136,7 @@
             text-align: center;
             color: #444;
             margin-bottom:2.5rem;
-            .icon-fanhui{
+            .icon-fold{
                 width: 1.25rem;
                 font-size: 1.125rem;
                 padding: 0;
@@ -166,7 +166,7 @@
                     font-size: .65rem;
                     margin-right: .75rem;
                 }
-                .icon-xiasanjiao{
+                .icon-jiantou-{
                     font-size:.3rem;
                     padding-right: 3px;
                     border-right: 1px solid;

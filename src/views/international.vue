@@ -6,7 +6,7 @@
         </div>
         <div class="sign-form">
             <div>
-                <span class="iconfont icon-msnui-tel"></span>
+                <span class="iconfont icon-shouji"></span>
                 <select id="country" v-model="selected">
                     <option value="+61">澳大利亚</option>
                     <option value="+82">韩国</option>
@@ -21,11 +21,11 @@
                     <option value="+886">中国台湾</option>
                     <option value="+852">中国香港</option>
                 </select>
-                <span class="iconfont icon-xiasanjiao"></span>
+                <span class="iconfont icon-jiantou-"></span>
                 <input type="tel" placeholder="请输入手机号" v-model="username" class="tel-input" :checktel="checktel">
             </div>
             <div>
-                <span class="iconfont icon-mima"></span>
+                <span class="iconfont icon-suo"></span>
                 <input :type="typepwd" placeholder="请输入密码" v-model="password">
                 <span class="iconfont iconpwd" :class="showpwdicon" @click="toShowPwd"></span>
             </div>
