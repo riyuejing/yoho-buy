@@ -1,13 +1,14 @@
 <template>
     <!--人气单品部分-->
     <div class="popularItem">
-        <a href="">
+        <router-link to="/list">
             <img src="http://img10.static.yhbimg.com/yhb-img01/2017/07/17/15/011b8689301097a3b8d820dd628df8003a.jpg?imageView2/2/w/640/h/200/q/90" alt="">
-        </a>
+        </router-link>
         <div class="hot-single-goods-list">
             <ul>
                 <li class="hot-single-goods" v-for="item in items">
-                    <a href="">
+                    <!--点击下面的a链接跳转到商品详情页-->
+                    <a href="/product">
                         <img :src="item.src" alt="">
                         <div class="goods-info">
                             <h3 class="price">{{item.money}}</h3>
@@ -19,13 +20,11 @@
             </ul>
         </div>
 
-        <!--<div style="background-image: url(http://img11.static.yhbimg.com/yhb-img01/2017/05/25/16/01b43fa1d22531b1ddd8513580d0b4e68f.jpg?imageView2/2/w/640/h/26/q/60);" class="id-image"></div>-->
-        <!--<a href=""><img src="http://img10.static.yhbimg.com/yhb-img01/2017/08/16/17/01a00e99aefb6466b2ee756852035eb95f.jpg?imageView2/3/w/640/h/200/q/60" alt=""></a>-->
-
         <ul>
-            <li v-for="digimg in digimgs">
+            <li v-for="(digimg,index) in digimgs" :class="getClass(index)">
                 <div style="background-image: url(http://img11.static.yhbimg.com/yhb-img01/2017/05/25/16/01b43fa1d22531b1ddd8513580d0b4e68f.jpg?imageView2/2/w/640/h/26/q/60);" class="id-image"></div>
-                <a href=""><img :src="digimg.src" alt=""></a>
+                <a @click="toList(index)" href="javascript:;"><img :src="digimg.src" alt="">
+                    <a href="javascript:;">{{digimg.name}}</a ></a>
             </li>
         </ul>
 
@@ -85,20 +84,33 @@
                 ],
                 digimgs:[
                     {
-                        src:"http://img10.static.yhbimg.com/yhb-img01/2017/08/16/17/01a00e99aefb6466b2ee756852035eb95f.jpg?imageView2/3/w/640/h/200/q/60"
+                        src:"http://img10.static.yhbimg.com/yhb-img01/2017/08/16/17/01a00e99aefb6466b2ee756852035eb95f.jpg?imageView2/3/w/640/h/200/q/60",
+                        hrefs:"/list?from=datu&query=meizhuang"
                     },
                     {
-                        src:"http://img10.static.yhbimg.com/yhb-img01/2017/08/16/17/01c0f7fc0367f86a1e9b1d2d5d47daffab.jpg?imageView2/3/w/640/h/200/q/60"
+                        src:"http://img10.static.yhbimg.com/yhb-img01/2017/08/16/17/01c0f7fc0367f86a1e9b1d2d5d47daffab.jpg?imageView2/3/w/640/h/200/q/60",
+                        hrefs:"/list?from=datu&query=lehuojiaju"
                     },
                     {
-                        src:"http://img10.static.yhbimg.com/yhb-img01/2017/08/16/17/011d25cc4122b7b3fc60181070c45ade86.jpg?imageView2/3/w/640/h/200/q/60"
+                        src:"http://img10.static.yhbimg.com/yhb-img01/2017/08/16/17/011d25cc4122b7b3fc60181070c45ade86.jpg?imageView2/3/w/640/h/200/q/60",
+                        hrefs:"/list?from=datu&query=shishangdapei"
                     },
                     {
-                        src:"http://img11.static.yhbimg.com/yhb-img01/2017/08/16/17/01aa32eb925ee5211fb457556b402423b7.jpg?imageView2/3/w/640/h/200/q/60"
+                        src:"http://img11.static.yhbimg.com/yhb-img01/2017/08/16/17/01aa32eb925ee5211fb457556b402423b7.jpg?imageView2/3/w/640/h/200/q/60",
+                        hrefs:"/list?from=datu&query=chaoliushuma"
                     }
-                ]
+                ],
+                money:'a'
             }
-
+        },
+        methods: {
+            getClass(_index){
+                return "digimg"+_index;
+            },
+            toList(_index){
+                this.$store.commit("add",this.digimgs[_index]);
+                this.$router.push(this.digimgs[_index].hrefs);
+            }
         }
     }
 </script>
