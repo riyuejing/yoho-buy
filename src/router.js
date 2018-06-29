@@ -31,6 +31,7 @@ import Order from './views/order/order'
 import Address from './views/address/address'
 import Show from './views/show/show'
 import orderList from './views/orderList/orderList.vue'
+import MyLike from './views/mylike'
 
 Vue.use(Router)
 export default new Router({
@@ -199,6 +200,11 @@ export default new Router({
       path: '/personalCenter/orders',
       name: 'orderList',
       component: orderList
+    },
+    //我的收藏
+    {
+      path:'/mylike',
+        component:MyLike
     }
   ]
 })
