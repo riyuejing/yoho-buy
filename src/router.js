@@ -215,6 +215,12 @@ export default new Router({
     {
       path:'/mylike',
         component:MyLike
+    },
+    //新人专享福利
+    {
+      path: '/newpeople',
+      name: 'newpeople',
+      component: NewPeople
     }
   ]
 })

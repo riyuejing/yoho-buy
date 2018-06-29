@@ -44,89 +44,134 @@
 </template>
 
 <script>
-    import Bus from '../components/common/bus'
-    import BScroll from 'better-scroll'
-    import TitleTop from '../components/common/titleTop'
-    export default {
-        name: "lcate",
-        components:{
-          TitleTop
-        },
-        data(){
-            return {
-                data:{},
-                myPrimaryClass:'',
-                mySecondclass:''
-            }
-        },
+import Bus from "../components/common/bus";
+import BScroll from "better-scroll";
+import TitleTop from "../components/common/titleTop";
+export default {
+  name: "lcate",
+  components: {
+    TitleTop
+  },
+  data() {
+    return {
+      data: {},
+      myPrimaryClass: "",
+      mySecondclass: "",
+      query: {}
+    };
+  },
 
-        created(){
-            Bus.$on("primaryClass",(data)=>{
-                this.myPrimaryClass = data;
-            });
-            Bus.$on("secondclass",(data)=>{
-                this.mySecondclass = data;
-            });
-            Bus.$on('indexsecondclass',(data)=>{
-                this.mySecondclass = data;
-            });
-            this.$http.get('/api/goods/goods-class',{
-                params:{
-                    primaryclass:this.myPrimaryClass,
-                    secondclass:this.mySecondclass
-                }
-            }).then(({data})=>{
-                this.data = data;
-            });
-        },
-        mounted(){
-            let listScroll = new BScroll(this.$refs.lis,{click:true});
-            $('.top-btn li').click(function(){
-                $(this).css("color","#000").siblings().css("color","#999");
-                $(".i-block1").css("color",'#999').next().css("color",'#999');
-            });
-            var flag = true;
-            $(".tab-price").click(function(){
-                if(flag){
-                    $(".i-block1").css("color",'#000');
-                    $('.i-block').css("color","#999");
-                    flag = !flag;
-                }else{
-                    $(".i-block1").css("color",'#999');
-                    $('.i-block').css("color","#000");
-                    flag = !flag;
-                }
-            });
-
-        },
-        methods:{
-            getClass(_id){
-                return "id"+_id;
-            },
-            showSimilar(item){
-                if(item.isSimilar == undefined){
-                    this.$set(item,"isSimilar",true);
-                }else{
-                    item.isSimilar = !item.isSimilar;
-                }
-            },
-            goToDetail(obj,_index){
-                this.$router.push('/product');
-                this.$store.commit('detailId',obj.goodsId);
-                //console.log(obj.goodsId);
-            }
-        },
-        filters:{
-            price(price){
-                return "¥"+price;
-            }
-        }
+  created() {
+    Bus.$on("primaryClass", data => {
+      this.query = {
+        primaryclass: data
+      };
+      this.$http
+        .get("/api/goods/goods-class", {
+          params: this.query
+        })
+        .then(({ data }) => {
+          this.data = data;
+        });
+      // this.myPrimaryClass = data;
+    });
+    Bus.$on("secondclass", data => {
+      this.query = {
+        secondclass: data
+      };
+      this.$http
+        .get("/api/goods/goods-class", {
+          params: this.query
+        })
+        .then(({ data }) => {
+          this.data = data;
+        });
+      // this.mySecondclass = data;
+    });
+    Bus.$on("indexsecondclass", data => {
+      this.query = {
+        secondclass: data
+      };
+      this.$http
+        .get("/api/goods/goods-class", {
+          params: this.query
+        })
+        .then(({ data }) => {
+          this.data = data;
+        });
+      // this.mySecondclass = data;
+    });
+    // Bus.$on("primaryClass",(data)=>{
+    //     this.myPrimaryClass = data;
+    // });
+    // Bus.$on("secondclass",(data)=>{
+    //     this.mySecondclass = data;
+    // });
+    // Bus.$on('indexsecondclass',(data)=>{
+    //     this.mySecondclass = data;
+    // });
+    // this.$http.get('/api/goods/goods-class',{
+    //     params:{
+    //         primaryclass:this.myPrimaryClass,
+    //         secondclass:this.mySecondclass
+    //     }
+    // }).then(({data})=>{
+    //     this.data = data;
+    // });
+  },
+  mounted() {
+    let listScroll = new BScroll(this.$refs.lis, { click: true });
+    $(".top-btn li").click(function() {
+      $(this)
+        .css("color", "#000")
+        .siblings()
+        .css("color", "#999");
+      $(".i-block1")
+        .css("color", "#999")
+        .next()
+        .css("color", "#999");
+    });
+    var flag = true;
+    $(".tab-price").click(function() {
+      if (flag) {
+        $(".i-block1").css("color", "#000");
+        $(".i-block").css("color", "#999");
+        flag = !flag;
+      } else {
+        $(".i-block1").css("color", "#999");
+        $(".i-block").css("color", "#000");
+        flag = !flag;
+      }
+    });
+  },
+  methods: {
+    getClass(_id) {
+      return "id" + _id;
+    },
+    showSimilar(item) {
+      if (item.isSimilar == undefined) {
+        this.$set(item, "isSimilar", true);
+      } else {
+        item.isSimilar = !item.isSimilar;
+      }
+    },
+    goToDetail(obj, _index) {
+      this.$router.push("/product");
+      this.$store.commit("detailId", obj.goodsId);
+      //console.log(obj.goodsId);
     }
+  },
+  filters: {
+    price(price) {
+      return "¥" + price;
+    }
+  }
+};
 </script>
 
 <style lang="less" scoped>
-    @import "../components/common/list/list";
-    .list-wrap{
-        top:4.5rem; 
-    }
+@import "../components/common/list/list";
+.list-wrap {
+  top: 4.5rem;
+}
 </style>
