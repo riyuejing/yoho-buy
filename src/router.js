@@ -95,8 +95,6 @@ export default new Router({
           component: List
         }]
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
     //购物车
     {
       path: '/cart',
@@ -306,11 +304,6 @@ export default new Router({
       path: '/shopintrothir',
       name: 'shopIntro3',
       component: ShopIntro3,
-=======
-
-=======
-
->>>>>>> 7d7b5eea3dca38165b33557aa2b931cd0b2669ef
       //购物车
       {
         path:'/cart',
@@ -418,29 +411,26 @@ export default new Router({
     {
       path: '/order',
       component: Order,
-<<<<<<< HEAD
     },
     //地址页面
     {
       path: '/address',
       component: Address,
     },
-=======
+    //地址页面
+    {
+      path: '/address',
+      component: Address,
     },
     //地址页面
     {
       path: '/address',
       component: Address,
     },
->>>>>>> 7d7b5eea3dca38165b33557aa2b931cd0b2669ef
     //展示地址
     {
       path:'/show',
       component:Show,
-<<<<<<< HEAD
->>>>>>> 7d7b5eea3dca38165b33557aa2b931cd0b2669ef
-=======
->>>>>>> 7d7b5eea3dca38165b33557aa2b931cd0b2669ef
     }
   ]
 })
