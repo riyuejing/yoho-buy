@@ -23,6 +23,7 @@ import BNS from './views/thirdFloorPart/BSN' //热门品牌中BNS
 import DetailPro from './components/detail_introduction/detail_introduce'
 import lifestyleBrands from './components/lifestyle_brands/lifestyle_brands'
 import cart from './components/cart/cart'
+import MyLike from './views/mylike'
 Vue.use(Router)
 export default new Router({
   mode:"history",
@@ -156,6 +157,11 @@ export default new Router({
       {
         path:'/list',
         component:ListToCate
+      },
+      //我的收藏
+      {
+        path:'/mylike',
+          component:MyLike
       }
           ]
         })

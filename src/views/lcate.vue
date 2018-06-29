@@ -17,12 +17,13 @@
                 <i class="iconfont icon-sanjiao_xia"></i>
             </li>
         </ul>
+
         <div class="list-wrap" ref="lis">
             <ul class="list-con">
-                <li v-for="item in data" :class="getClass(item.goodsId)">
-                    <img :src=`http://10.80.13.205:3000/(item.goodsImgs)[0]` :alt="item.goodsName">
+                <li v-for="(item,index) in data" :class="getClass(item.goodsId)">
+                    <img :src="(item.goodsImgs)[0]" :alt="item.goodsName" @click="goToDetail(item,index)">
                     <div class="desdetail">
-                        <p class="prosname">{{item.goodsName}}</p>
+                        <p class="prosname" @click="goToDetail(item,index)">{{item.goodsName}}</p>
                         <p class="aboutprice">
                             <span class="cuprice" :class="{'cuprice2':item.goodsPrice.oldprice}">{{item.goodsPrice.currentPrice | price}}</span>
                             <span v-if="item.goodsPrice.oldprice" class="oldprice">{{item.goodsPrice.oldprice | price}}</span>
@@ -108,6 +109,11 @@
                 }else{
                     item.isSimilar = !item.isSimilar;
                 }
+            },
+            goToDetail(obj,_index){
+                this.$router.push('/product');
+                this.$store.commit('detailId',obj.goodsId);
+                //console.log(obj.goodsId);
             }
         },
         filters:{

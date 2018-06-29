@@ -1,7 +1,7 @@
 <template>
     <div class="outest-container">
-        <div class="top">
-            <img src="../components/common/logo.jpg" alt="包包杂货店" class="logopng">
+        <div class="top">LIFESTYLE
+            <!--<img src="../components/common/logo.jpg" alt="包包杂货店" class="logopng">-->
             <a href="/search">
                 <i class="iconfont icon-sousuo"></i>
             </a>
@@ -51,10 +51,10 @@
         </ul>
         <div class="list-wrap">
             <ul class="list-con">
-                <li v-for="item in data" :class="getClass(item.goodsId)">
-                    <img :src="(item.goodsImgs)[0]" :alt="item.goodsName">
+                <li v-for="(item,index) in data" :class="getClass(item.goodsId)">
+                    <img :src="(item.goodsImgs)[0]" :alt="item.goodsName" @click="goToDetail(item,index)">
                     <div class="desdetail">
-                        <p class="prosname">{{item.goodsName}}</p>
+                        <p class="prosname" @click="goToDetail(item,index)">{{item.goodsName}}</p>
                         <p class="aboutprice">
                             <span class="cuprice" :class="{'cuprice2':item.goodsPrice.oldprice}">{{item.goodsPrice.currentPrice | price}}</span>
                             <span v-if="item.goodsPrice.oldprice" class="oldprice">{{item.goodsPrice.oldprice | price}}</span>
@@ -130,7 +130,13 @@
                 this.$http.get('/api/goods/top-sale').then(({data})=>{
                 this.data = data;
             });
+            },
+            goToDetail(obj,_index){
+                this.$router.push('/product');
+                this.$store.commit('detailId',obj.goodsId);
+                //console.log(obj.goodsId);
             }
+
         },
         filters:{
             price(price){
@@ -178,9 +184,11 @@
         background-image: linear-gradient(#323232,#414141);
         color:#fff;
         .logopng{
-            float:left;
-            width: 1rem;
-            height:100%;
+            position:absolute;
+            top:0;
+            left:0;
+            width: 2.5458rem;
+            height: 2.5458rem;
         }
         a{
             position:absolute;

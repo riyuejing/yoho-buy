@@ -47,19 +47,19 @@
                         src:"http://img10.static.yhbimg.com/yhb-img01/2017/02/03/09/014647f5d597273cca382e6a2cc8cdad08.png?imageView2/2/w/98/h/98/q/60",
                         name:"美妆馆",
                         toRoute:'goods/goods-class',
-                        primaryclass:'美妆馆',
+                        primaryclass:'美妆/个护',
                         hrefs:"/lifestyle-new?from=index&query=meizhuangguan"
                     },
                     {
                         src:"http://img11.static.yhbimg.com/yhb-img01/2017/03/20/16/017cc81de99ebaa7cfa0f70aee3e4c4194.png?imageView2/2/w/98/h/98/q/60",
                         name:"玩意儿",
                         toRoute:'goods/goods-class',
-                        primaryclass:'玩具',
+                        primaryclass:'玩具礼品',
                         hrefs:"/lifestyle-new?from=index&query=玩具"
                     },
                     {
                         src:"http://img11.static.yhbimg.com/yhb-img01/2017/05/08/11/01e60701b0835a909b269f617bdb1cf351.png?imageView2/2/w/98/h/98/q/60",
-                        name:"试听盛宴",
+                        name:"视听盛宴",
                         toRoute:'goods/goods-class',
                         primaryclass:'数码3C',
                         hrefs:"/lifestyle-new?from=index&query=视听盛宴"

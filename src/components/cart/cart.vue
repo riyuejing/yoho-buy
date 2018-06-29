@@ -1,83 +1,12 @@
 <template>
     <div>
-        <div class="confrimdelete">
-            <div class="box"></div>
-        </div>
-        <div class="cart-bottom">
-            <div class="selectAll">
-                <p>
-                    <!--选中-->
-                    <i class="iconfont icon-xuanze" :class="{'icon-xuanze1':!isSelectAll}" @click="aboutSelectAll"></i>
-                </p>
-                <p> 全选</p>
-            </div>
-            <div class="zongji">
-                <div class="text" v-if="!isModify">
-                    <p>总计:{{total | price}} <span>({{totalCount}}件)</span></p>
-                    <p>不含运费</p>
-                </div>
-                <div class="btn-jiesuan" v-if="!isModify">结算</div>
-                <div class="btn-jiesuan shoucang"v-if="isModify">移入收藏夹</div>
-                <div class="btn-jiesuan" v-if="isModify" @click="delGood">删除</div>
-            </div>
-        </div>
         <div class="title-top">
             <span class="iconfont icon-fanhui back" @click="goToLast"></span>
             <h2>购物车</h2>
-            <span class="iconviewlist" @click="isModify =!isModify">{{changetext}}</span>
-        </div>
-        <div>
-            <!--<div v-if="data.errorcode !=1">-->
-            <div class="coudan" v-if="forFare">
-                <span>再买{{299 | price}}即可免运费</span>
-                <a href="/list"><span>去凑单 <i> &gt;</i></span></a>
-            </div>
-            <div class="coudan" v-if="could">
-                <span>购物满{{299 | price}}即可免运费</span>
-                <a href="/list"><span>去凑单 <i> &gt;</i></span></a>
-            </div>
-            <div class="coudan" v-if="hasDone">
-                <span>购物满{{299 | price}}已免运费</span>
-                <a href="/list"><span>去凑单 <i> &gt;</i></span></a>
-            </div>
-            <ul class="cart-ul">
-                <!--  v-if="data"-->
-                <li class="cart-li" v-for="(item,index) in data">
-                    <div class="select">
-                        <i class="iconfont icon-xuanze" :class="{'icon-xuanze1':item.isSelect}" @click="select(item)"></i>
-                    </div>
-
-                    <div class="con">
-                        <img :src="item.goodsImgs[0]" :alt="item.goodsName" @click="goTo(item,index)">
-                        <div class="des-text">
-                            <div v-if="!isModify">
-                                <p class="itemname">{{item.goodsName}}</p>
-                                <p class="style">
-                                    <span>颜色:{{item.color}}</span>
-                                    <span>尺码:{{item.size}}</span>
-                                </p>
-                            </div>
-                            <div class="count">×{{item.count}}</div>
-                            <!--点击编辑的时候-->
-                            <div class="modify" v-if="isModify">
-                                <div class="change-num">
-                                    <span @click="changeQuantity(item,-1,index)" class="dec">-</span>
-                                    <input type="text" disabled :value="item.count"/>
-                                    <span  @click="changeQuantity(item,1)" class="add">+</span>
-                                </div>
-                                <div class="change-style">
-                                    <span class="styles">颜色:获取 尺码:获取</span>
-                                    <span class="iconfont icon-xiajiantou" @click="chooseAgain =!chooseAgain"></span>
-                                </div>
-                            </div>
-                            <p>{{item.goodsPrice.currentPrice*item.count | price}}</p>
-                        </div>
-                    </div>
-                </li>
-            </ul>
+            <span class="iconviewlist" @click="edit">{{changetext}}</span>
         </div>
         <!--先判断是否登录了 -->
-        <div v-if="data.errorcode==1">
+        <div v-if="data.data.errorcode==1">
             <!-- 购物车内容 -->
             <div class="unregistered">
                 <!-- 请先登录 -->
@@ -96,76 +25,164 @@
                 </div>
             </div>
         </div>
-        <!---->
-        <div class="list-wrap">
-            <p  class="xinpin">为你优选新品</p>
-            <ul class="list-con">
-                <li v-for="item in list" :class="getClass(item.goodsId)">
-                    <img :src="(item.goodsImgs)[0]" :alt="item.goodsName">
-                    <div class="desdetail">
-                        <p class="prosname">{{item.goodsName}}</p >
-                        <p class="aboutprice">
-                            <span class="cuprice" :class="{'cuprice2':item.goodsPrice.oldprice}">{{item.goodsPrice.currentPrice | price}}</span>
-                            <span v-if="item.goodsPrice.oldprice" class="oldprice">{{item.goodsPrice.oldprice | price}}</span>
-                            <span class="formore" @click="showSimilar(item)">
-                                <i class="iconfont icon-htmal5icon26"></i>
-                            </span>
-                        </p >
-                    </div>
-                    <div class="cover" v-show="item.isSimilar">
-                        <div class="similar">找相似</div>
-                    </div>
-                    <div class="newpro" v-if="item.isNewsale">NEW</div>
-                    <div class="saleout" v-if="item.isPresale">即将售罄</div>
-                </li>
-            </ul>
-        </div>
-        <!--弹出选择页面-->
-        <div class="choose" v-if="chooseAgain">
-            <div class="con">
-                <div class="p1">
-                    <img src="" alt="">
-                    <div>
-                        <p>价格</p>
-                        <p>请选择颜色</p>
-                        <p>已选:颜色、尺码</p>
-                        <p>鞋内长:多少长</p>
-                    </div>
-                    <p class="circle" @click="chooseAgain =!chooseAgain">×</p>
-                </div>
-                <div class="p2">
-                    <p class="left">颜色</p>
-                    <!--r-test2 选中样式-->
-                    <ul class="r-ul">
-                        <li class="r-test">获取颜色</li>
-                        <li class="r-test">获取颜色</li>
-                        <li class="r-test">获取颜色</li>
-                        <li class="r-test">获取颜色</li>
-                    </ul>
-                </div>
-                <div class="p3">
-                    <p class="left">尺码</p>
-                    <!--r-test2 选中样式-->
-                    <ul class="r-ul">
-                        <li class="r-test">获取尺码</li>
-                        <li class="r-test">获取尺码</li>
-                        <li class="r-test">获取尺码</li>
-                        <li class="r-test">获取尺码</li>
-                    </ul>
-                </div>
-                <div class="p4">
-                    <p class="left">数量</p>
-                    <div class="likebtn">
-                        <!--@click="changeQuantity(item,-1,index)" -->
-                        <span class="dec">-</span>
-                        <!--:value="item.count"-->
-                        <input type="text" disabled value="1"/>
-                        <!--@click="changeQuantity(item,1)"-->
-                        <span  class="add">+</span>
+
+        <div v-if="data.status==200">
+            <div class="confrimdelete" v-if="isBox">
+                <div class="box" @click="isBox = false">
+                    <div class="boxtop">您确定要从购物车中删除么</div>
+                    <div class="boxbottom">
+                        <p @click="isBox = false">取消</p>
+                        <p @click="delGood">确定</p>
                     </div>
                 </div>
             </div>
+            <div class="cart-bottom">
+                <div class="selectAll">
+                    <p>
+                        <!--选中-->
+                        <i class="iconfont icon-xuanze" :class="{'icon-xuanze1':!isSelectAll}" @click="aboutSelectAll"></i>
+                    </p>
+                    <p> 全选</p>
+                </div>
+                <div class="zongji">
+                    <div class="text" v-if="!isModify">
+                        <p>总计:{{total | price}} <span>({{totalCount}}件)</span></p>
+                        <p>不含运费</p>
+                    </div>
+                    <div class="btn-jiesuan" v-if="!isModify" @click="toJieSuan">结算</div>
+                    <div class="btn-jiesuan shoucang" v-if="isModify" @click="shoucang">移入收藏夹</div>
+                    <div class="btn-jiesuan" v-if="isModify" @click="isBox = !isBox">删除</div>
+                </div>
+            </div>
+            <div>
+                <!--<div v-if="data.errorcode !=1">-->
+                <div class="coudan" v-if="forFare">
+                    <span>再买{{299 | price}}即可免运费</span>
+                    <a href="/list"><span>去凑单 <i> &gt;</i></span></a>
+                </div>
+                <div class="coudan" v-if="could">
+                    <span>购物满{{299 | price}}即可免运费</span>
+                    <a href="/list"><span>去凑单 <i> &gt;</i></span></a>
+                </div>
+                <div class="coudan" v-if="hasDone">
+                    <span>购物满{{299 | price}}已免运费</span>
+                    <a href="/list"><span>去凑单 <i> &gt;</i></span></a>
+                </div>
+                <ul class="cart-ul">
+                    <!--  v-if="data"-->
+                    <li class="cart-li" v-for="(item,index) in data.data">
+                        <div class="select">
+                            <i class="iconfont icon-xuanze" :class="{'icon-xuanze1':item.isSelect}"
+                               @click="select(item,index)"></i>
+                        </div>
 
+                        <div class="con">
+                            <img :src="item.goodsImgs[0]" :alt="item.goodsName" @click="goTo(item,index)">
+                            <div class="des-text">
+                                <div v-if="!isModify">
+                                    <p class="itemname">{{item.goodsName}}</p>
+                                    <p class="style">
+                                        <span>颜色:{{item.color}}</span>
+                                        <span>尺码:{{item.size}}</span>
+                                    </p>
+                                </div>
+                                <div class="count">×{{item.count}}</div>
+                                <!--点击编辑的时候-->
+                                <div class="modify" v-if="isModify">
+                                    <div class="change-num">
+                                        <span @click="changeQuantity(item,-1,index)" class="dec">-</span>
+                                        <input type="text" disabled :value="item.count"/>
+                                        <span  @click="changeQuantity(item,1)" class="add">+</span>
+                                    </div>
+                                    <div class="change-style">
+                                        <span class="styles">颜色:{{item.color}} 尺码:{{item.size}}</span>
+                                        <span class="iconfont icon-xiajiantou" @click="getGoodsMsg(item,index)"></span>
+                                    </div>
+                                </div>
+                                <p>{{item.goodsPrice.currentPrice*item.count | price}}</p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!---->
+            <div class="list-wrap">
+                <p  class="xinpin">为你优选新品</p>
+                <ul class="list-con">
+                    <li v-for="item in list" :class="getClass(item.goodsId)">
+                        <img :src="(item.goodsImgs)[0]" :alt="item.goodsName">
+                        <div class="desdetail">
+                            <p class="prosname">{{item.goodsName}}</p >
+                            <p class="aboutprice">
+                                <span class="cuprice" :class="{'cuprice2':item.goodsPrice.oldprice}">{{item.goodsPrice.currentPrice | price}}</span>
+                                <span v-if="item.goodsPrice.oldprice" class="oldprice">{{item.goodsPrice.oldprice | price}}</span>
+                                <span class="formore" @click="showSimilar(item)">
+                                <i class="iconfont icon-htmal5icon26"></i>
+                            </span>
+                            </p >
+                        </div>
+                        <div class="cover" v-show="item.isSimilar">
+                            <div class="similar">找相似</div>
+                        </div>
+                        <div class="newpro" v-if="item.isNewsale">NEW</div>
+                        <div class="saleout" v-if="item.isPresale">即将售罄</div>
+                    </li>
+                </ul>
+            </div>
+            <!--弹出选择页面-->
+            <div class="choose" v-if="chooseAgain">
+                <div class="con">
+                    <div class="p1">
+                        <img :src="goodsMsg.goodsImgs[0]" :alt="goodsMsg.goodsName">
+                        <div>
+                            <p>{{goodsMsg.goodsPrice.currentPrice | price}}</p>
+                            <p v-show="pleChCo">请选择颜色、尺码</p>
+                            <p v-show="yixuan">已选:{{keycolor}}、{{keysize}}</p>
+                        </div>
+                        <p class="circle" @click="chooseAgain =!chooseAgain">×</p>
+                    </div>
+                    <div class="p2">
+                        <p class="left">颜色</p>
+                        <!--r-test2 选中样式-->
+                        <ul class="r-ul">
+                            <li class="r-test2" :class="{'r-test':iscur===index}" v-for="(item,index) in
+                            goodsMsg.goodsAttr.color" @click="tabclick(item,index)">{{item}}</li>
+                        </ul>
+                    </div>
+                    <div class="p3">
+                        <p class="left">尺码</p>
+                        <!--r-test2 选中样式-->
+                        <ul class="r-ul">
+                            <li class="r-test2" :class="{'r-test':iscur2===index}" v-for="(item,index) in
+                            goodsMsg.goodsAttr.size" @click="tabclick2(item,index)">{{item}}</li>
+                        </ul>
+                    </div>
+                    <div class="p4">
+                        <p class="left">数量</p>
+                        <div class="likebtn">
+                            <!--@click="changeQuantity(item,-1,index)" -->
+                            <span class="dec" @click="changecount(-1)">-</span>
+                            <!--:value="item.count"-->
+                            <input type="text" disabled :value="changenum"/>
+                            <!--@click="changeQuantity(item,1)"-->
+                            <span  class="add" @click="changecount(1)">+</span>
+                        </div>
+                    </div>
+                    <!--确定按钮-->
+                    <p class="btn-queding" @click="yesMsg">确定</p>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="atLeast">
+            <p>请至少选择一件商品</p>
+        </div>
+        <div class="islike">
+            <p>收藏成功</p>
+        </div>
+        <div class="iszero">
+            <p>您选择的数量不能为0~~~</p>
         </div>
     </div>
 </template>
@@ -176,7 +193,7 @@ export default {
     name: "cart",
     data(){
         return{
-            data:[],
+            data:{},
             isSelectAll:true,
             confirmDelete:false,
             toDelIndex:-1,
@@ -185,7 +202,21 @@ export default {
             forFare:true,
             isModify:false,
             list:{},
-            chooseAgain:false
+            chooseAgain:false,
+            isBox:false,
+            goodsMsg:{},
+            changenum:1,
+            hasChangeMsg:false,
+            iscur:0,
+            iscur2:0,
+            nowClick:false,
+            keycolor:'',
+            keysize:'',
+            pleChCo:true,
+            yixuan:false,
+            moindex:0,
+            mogoodsid:0
+
         }
     },
     computed:{
@@ -195,7 +226,7 @@ export default {
         //千万不能用箭头函数
         total(){
             var totalPrice = 0;
-            this.data.forEach(function(goods){
+            this.data.data.forEach(function(goods){
                 if(!goods.isSelect){
                     totalPrice +=goods.goodsPrice.currentPrice*goods.count;
                 }
@@ -215,7 +246,7 @@ export default {
         },
         totalCount(){
             let totalcount = 0;
-            this.data.forEach(function(goods){
+            this.data.data.forEach(function(goods){
                 goods.count = goods.count - 0;
                 if(!goods.isSelect){
                     totalcount += goods.count;
@@ -226,25 +257,88 @@ export default {
         changetext(){
             if(this.isModify){
                 return '完成';
+
             }else{
                 return "编辑";
             }
 
+        },
+        selectNum(){
+            let num = 0;
+            this.data.data.forEach((goods)=>{
+                if(!goods.isSelect){
+                    num++;
+                }
+
+            });
+            return num;
         }
     },
     mounted(){
       //let bScroll = new BScroll(this.$refs.cartdiv,{click:true});
+
     },
     created(){
-        this.$http.get('/api/user/getCart').then(({data})=>{
+        this.$http.get('/api/user/getCart').then((data)=>{
             this.data = data;
-            console.log(this.data);
-        })
+            //console.log(this.data);
+        });
         this.$http.get('/api/goods/new-goods').then(({data})=>{
             this.list = data;
         });
     },
     methods:{
+        toJieSuan(){
+            this.$router.push('/personalCenter/orders');
+        },
+        //数量重新做选择
+        getGoodsMsg(obj,_index){
+            this.moindex = _index - 0;
+            this.mogoodsid = obj.goodsId - 0;
+            this.chooseAgain = !this.chooseAgain;
+            this.$http.get('/api/goods',{
+                params:{
+                    goodsid:obj.goodsId
+                }
+            }).then(({data})=>{
+                this.goodsMsg = data;
+            });
+        },
+        //按确定按钮
+        yesMsg(){
+            this.hasChangeMsg = true;
+            //颜色尺码数量 keycolor keysize this.changenum
+            this.data.data[this.moindex].color = this.keycolor;
+            this.data.data[this.moindex].size = this.keysize;
+            this.data.data[this.moindex].count = this.changenum;
+            this.chooseAgain = !this.chooseAgain;
+            //console.log(this.data.data);
+            //向后台发送消息
+            this.$http.get('/api/user/editCart',{
+                params:{
+                    goodsid:this.mogoodsid,
+                    size:this.keysize,
+                    color:this.keycolor,
+                    count:this.changenum
+                }
+            })
+
+        },
+        //颜色尺寸的选择
+        tabclick(obj,_index){
+            this.keycolor = obj;
+            if(this.keycolor == ''){
+                this.pleChCo = true;
+            }else{
+                this.pleChCo = false;
+                this.yixuan = true;
+            }
+            this.iscur = _index;
+        },
+        tabclick2(obj,_index){
+            this.keysize = obj;
+            this.iscur2 = _index;
+        },
         goToLast(){
             this.$router.go(-1);
         },
@@ -253,6 +347,19 @@ export default {
                 path:'/product',
 
             })
+        },
+        //重新选取数据
+        changecount(val){
+            if(this.changenum == 1 && val == -1){
+                this.changenum = 1;
+                //弹框 您选择的数量不能为0
+                $('.iszero').show();
+                setInterval(function(){
+                    $('.iszero').hide();
+                },1000);
+            }else{
+                this.changenum += val;
+            }
         },
         //编辑部分
         changeQuantity(good,val,_index){
@@ -264,17 +371,97 @@ export default {
                 good.count += val;
             }
         },
+        edit(){
+           this.isModify = !this.isModify;
+           // console.log(this.isModify);
+            //弹出来了
+            if(this.isModify){
+                this.isSelectAll = false;
+                this.data.data.forEach((good)=>{
+                    if(good.isSelect == undefined){
+                        this.$set(good,"isSelect",true);
+                    }
+                })
+            }else{
+                //弹出的消失
+                this.isSelectAll = true;
+                this.data.data.forEach((good)=>{
+                    if(good.isSelect == undefined){
+                        this.$set(good,"isSelect",false);
+                    }
+                })
+            }
+
+        },
+        //收藏
+        shoucang(){
+            this.data.data.forEach(function(goods){
+                //true没有被选中的,如果没有选中的,如果没有false
+                if(!goods.isSelect){
+                    //有选中的进行收藏 传到后台
+                    this.$http.get('/api/user/addCollection',{
+                        params:{
+                            goodsid:goods.goodsId
+                        }
+                    });
+                    //console.log(goods);
+                    $('.islike').show();
+                    setInterval(function(){
+                        $('.islike').hide();
+                    },1000);
+                }else{
+                    //没有选中的 弹出至少选一个商品的弹框
+                    $('.atLeast').show();
+                    setInterval(function(){
+                        $('.atLeast').hide();
+                    },1000);
+                }
+            });
+
+
+
+        },
         //删除
-        delGood(good,_index){
-            this.confirmDelete = true;
-            this.toDelIndex = _index;
-            this.data.splice(this.toDelIndex,1);
-            // console.log(this.confirmDelete);
-            this.confirmDelete = false;
+        delGood(){
+            console.log(this.selectNum);
+            // console.log(this.data.data);
+            if(this.selectNum <= 0){
+                $('.atLeast').show();
+                setInterval(function(){
+                    $('.atLeast').hide();
+                },1000);
+            }
+            var arr = [];
+            this.data.data.forEach((goods) => {
+                console.log(goods.isSelect);
+                if(goods.isSelect){
+                    arr.push(goods);
+                }
+
+            })
+
+            console.log(arr);
+            this.data.data = arr;
+            // this.data.data = this.data.data.map((goods)=>{
+            //     //true没有被选中的,选出没有被选中的,然后替换到现在的data中
+            //     //选中的并且按了按钮 向后头发送选中的信息
+            //     // this.$http.get('api//user/removeCart',{
+            //     //     params:{
+            //     //         goodsid:goods.goodsId,
+            //     //         size:goods.size,
+            //     //         color:goods.color,
+            //     //         count:goods.count
+            //     //     }
+            //     // })
+            //     // if(goods.isSelect){
+            //     //     return goods;
+            //     // }
+            //     console.log(goods);
+            // });
         },
         isCheckAll(){
             var flag = true;
-            this.data.forEach((goods)=>{
+            this.data.data.forEach((goods)=>{
                 //isSelect为true的话实际上是未选中 只要有未选中的就不是全选
                 if(goods.isSelect){
                     flag = false;
@@ -287,12 +474,13 @@ export default {
                 this.isSelectAll = true;
             }
         },
-        select(obj){
-            if(obj.isSelect == void 0){
+        select(obj,index){
+            if(obj.isSelect == undefined){
                 this.$set(obj,'isSelect',true);
             }else{
                 obj.isSelect = !obj.isSelect;
             }
+
             this.isCheckAll();
         },
         //底部的全选与非全选
@@ -300,12 +488,12 @@ export default {
             //如果item.isSelectAll为true可以设置 this.isSelectAll
             if(!this.isSelectAll){
                 this.isSelectAll = true;
-                this.data.forEach((goods)=>{
+                this.data.data.forEach((goods)=>{
                     goods.isSelect = false;
                 });
             }else{
                 this.isSelectAll = false;
-                this.data.forEach((good)=>{
+                this.data.data.forEach((good)=>{
                     good.isSelect = true;
                 })
             }
@@ -334,7 +522,75 @@ export default {
 <style scoped lang="less">
 @import './iconfont.css';
 @import '../common/list/list';
-//
+//请至少选择一件商品
+.atLeast,.islike,.iszero{
+    z-index: 10000;
+    border-radius: 0.65rem;
+    position: absolute;
+    top:50%;
+    left:50%;
+    margin-top:-1rem;
+    margin-left:-5rem;
+    width: 10rem;
+    height:2rem;
+    display: none;
+    background-color: rgba(0,0,0,.5);
+    p{
+        text-align: center;
+        width:100%;
+        height: 2rem;
+        line-height:2rem;
+        color:#fff;
+        font-size:14px;
+    }
+}
+//删除
+.confrimdelete{
+    width:100%;
+    height:100%;
+    z-index: 999;
+    position: absolute;
+    top:0;
+    left:0;
+    background-color: rgba(0,0,0,0.5);
+    .box{
+        position: absolute;
+        top:50%;
+        left:50%;
+        margin-top:-3.15rem;
+        margin-left:-6.75rem;
+        width:13.5rem;
+        height:6.3rem;
+        border-radius: .5rem;
+        background-color: rgba(255,255,255,.84);
+        font-size: 16px;
+        .boxtop{
+            text-align: center;
+            line-height: 4.1rem;
+            color:#000;
+            height: 4.1rem;
+            border-bottom: 1px solid #ccc;
+        }
+        .boxbottom{
+            height:2.2rem;
+            width:100%;
+            p{
+                text-align: center;
+                float:left;
+                width:49%;
+                height:2.2rem;
+                line-height: 2.2rem;
+            }
+            p:first-child{
+                border-right:1px solid #ccc;
+            }
+            p:last-child{
+                color: #d0021b;
+            }
+        }
+
+    }
+}
 //
 .list-wrap{
     position:relative;
@@ -368,6 +624,18 @@ export default {
         z-index: 666;
         padding:0 0.875rem;
         box-sizing: border-box;
+        .btn-queding{
+            position: absolute;
+            z-index: 777;
+            left:0;
+            bottom: 0;
+            width: 100%;
+            height: 2.35rem;
+            background-color: #d0021b;
+            color: #fff;
+            line-height: 2.35rem;
+            text-align: center;
+        }
         .p1{
             margin-top:0.875rem;
             position: relative;
@@ -388,12 +656,11 @@ export default {
                 float:left;
                 p{
                     color:#000;
-                    font-size:12px;
-                    border: 1px solid;
-                    line-height: 1.5;
+                    font-size:14px;
+                    line-height: 1.7;
                 }
                 p:first-child{
-                    font-size: 14px;
+                    font-size: 16px;
                     font-weight: bold;
                 }
             }
@@ -424,12 +691,25 @@ export default {
             }
             .r-ul{
                 height:100%;
-                border:1px solid red;
                 display: flex;
                 flex-direction: row;
                 justify-content: flex-start;
                 align-items: center;
-                .r-test{
+                .r-test2{
+                    width: 3.5rem;
+                    padding:0 0.3rem;
+                    margin-right:8px;
+                    font-size:12px;
+                    height: 1.65rem;
+                    line-height:1.65rem;
+                    border-radius:0.3rem;
+                    text-align:center;
+                    color:#000;
+                    background: #fff;
+                    border:1px solid #000;
+                }
+                li.r-test{
+                    width: 3.5rem;
                     padding:0 0.3rem;
                     margin-right:8px;
                     font-size:12px;
@@ -440,11 +720,6 @@ export default {
                     border:1px solid #e10;
                     border-radius:0.3rem;
                     text-align:center;
-                }
-                .r-test2{
-                    color:#000;
-                    background-color: #fff;
-                    border:1px solid #000;
                 }
             }
 

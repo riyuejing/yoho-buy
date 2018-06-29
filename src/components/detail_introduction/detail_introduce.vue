@@ -58,7 +58,8 @@
         <div class="feedback">
             <!-- 头 -->
             <div class="nav">
-                <span class="nav-left" v-if="goodslist.comments"  v-show="comments"  @click="commentactive()">商品评价（{{goodslist.comments.count}}）</span>
+                <span class="nav-left" v-if="goodslist.comments"  v-show="comments"  @click="commentactive">商品评价
+                    （{{goodslist.comments.count}}）</span>
                 <span class="nav-left" v-if="goodslist.comments" v-show="comment" @click="commentactive()"  style="color:black" >商品评价（{{goodslist.comments.count}}）</span>
                 <span class="nav-right" @click="active()"  v-if="normalproblem" >常见问题</span>
                  <span class="nav-right" @click="active()" v-if="normalproblems" style="color:black" >常见问题</span>
@@ -113,10 +114,10 @@
                 <a href="###">
                     <img  class="store-pic"  src="https://img10.static.yhbimg.com/yhb-img01/2018/05/10/11/01b0f2d8059c30f31c753505ba94fa4549.jpg?imageMogr2/thumbnail/47x47/extent/47x47/background/d2hpdGU=/position/center/quality/80" alt="">
                 </a>
-                <a href="###" class="name">
+                <a href="/bns" class="name">
                     HOT TOYS
                 </a>
-                <a href="###" class="store-link">
+                <a href="/bns" class="store-link">
                     进入店铺
                     <i class="icon-keyboard_arrow_right"></i>
                 </a>
@@ -244,72 +245,120 @@
         <div class="cart-bar">
             <a class="bottom-cart">
                 <i class="icon-cart"></i>
-                <p>购物车</p>
+                <p @click="toCart">购物车</p>
                 <p class="circle" v-if="showCircle" >{{amount}}</p>
             </a>
-            <a>
+            <a href="/bns">
                 <i class="icon-home2"></i>
                 <p>品牌商铺</p>
             </a>
             <a v-if="loveheart">
-                <i class="icon-favorite" @click="favorite()" ref="favorite" ></i>
+                <i class="icon-favorite" @click="favorite" ref="favorite"></i>
                 <p>收藏</p>
             </a>
             <a v-if="love">
                 <i class="icon-favorite-another icon-favorite" @click="favorite()" ref="favorite"   style="color:red" ></i>
                 <p>收藏</p>
             </a>
-            <a class="add-cart" @click="isAdd">
+            <a class="add-cart" @click="getGoodsMsg">
                <span class="enter">加入购物车</span>  
             </a>
         </div>
         <!-- 加入购物车的页面 -->
-        <div class="addcart-page" v-if="panel">
-            <div  class="chose-panel"   >
-                <div class="lookout" v-if="ingnorecolor">请选择颜色呐~</div>
-                <div class="lookout"  v-if="ingnoresize">请选择尺寸呐~</div>
-                <div class="lookout" v-if="ingnoretwo">请选择颜色和尺寸呐~</div>
-                <div class="lookout" v-if="success">成功添加入购物车了呢~</div>
-                <!-- 图片 -->
-                <div class="choose-wrap">
-                    <img v-for="item in goodslist.goodsImgs"    :src="item"  alt="" style="width:4.1rem;min-height:5rem" >
-                    <div class="choose">
-                        <p v-if="goodslist.goodsPrice">¥{{goodslist.goodsPrice.currentPrice}}</p>
-                        <p v-if="stillchoose" >请选择颜色,尺码</p>
-                        <p v-if="alreadychoose">已经选择黑色，x</p>
-                        <span class="remove" @click="isAdd()"></span>
+        <!--<div class="addcart-page" v-if="panel">-->
+            <!--<div  class="chose-panel"   >-->
+                <!--<div class="lookout" v-if="ingnorecolor">请选择颜色呐~</div>-->
+                <!--<div class="lookout"  v-if="ingnoresize">请选择尺寸呐~</div>-->
+                <!--<div class="lookout" v-if="ingnoretwo">请选择颜色和尺寸呐~</div>-->
+                <!--<div class="lookout" v-if="success">成功添加入购物车了呢~</div>-->
+                <!--&lt;!&ndash; 图片 &ndash;&gt;-->
+                <!--<div class="choose-wrap">-->
+                    <!--<img v-for="item in goodslist.goodsImgs"    :src="item"  alt="" style="width:4.1rem;min-height:5rem" >-->
+                    <!--<div class="choose">-->
+                        <!--<p v-if="goodslist.goodsPrice">¥{{goodslist.goodsPrice.currentPrice}}</p>-->
+                        <!--<p>请选择颜色,尺码</p>-->
+                        <!--<p>已经选择黑色，x</p>-->
+                        <!--<span class="remove" @click="isAdd()"></span>-->
+                    <!--</div>-->
+                <!--</div>-->
+               <!--&lt;!&ndash; 颜色 &ndash;&gt;-->
+                <!--<div class="color">-->
+                    <!--<span  v-if="colors"     class="color-name" :class="{change:colors-->
+                    <!--}">颜色 <span class="btn" @click="colorchange()">黑色</span></span>-->
+                    <!--<span v-if="color" class="color-name">颜色 <span class="btn" @click="colorchange()"  style="background:white;border:1px solid;color:black">黑色</span></span>-->
+                <!--</div>-->
+                <!--&lt;!&ndash; 尺码 &ndash;&gt;-->
+                <!--<div class="color">-->
+                    <!--<span class="color-name" v-if="sizes">尺码 <span  @click="sizechange()" class="btn btn1">x</span></span>-->
+                    <!--<span class="color-name" v-if="size" >尺码 <span  style="background:white;border:1px solid;color:black"   @click="sizechange()"  class="btn btn1">x</span></span>-->
+                <!--</div>-->
+              <!--&lt;!&ndash; 数量 &ndash;&gt;-->
+              <!--<div class="numbers">-->
+                  <!--<span class="number">数量</span>-->
+                  <!--<div>-->
+                      <!--<span class="delete" @click="del()">-</span>-->
+                      <!--<input  class="amount"   type="text"    disabled="1" v-model="amounts">-->
+                      <!--<span class="add" @click="amounts++">+</span>-->
+                  <!--</div>-->
+              <!--</div>-->
+              <!--<div class="btn-wrap">-->
+                  <!--<button class="buynow" >立即购买</button>-->
+                  <!--<button class="addCarts" @click="addcarts()" >加入购物车</button>-->
+              <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--弹出选择页面-->
+        <div class="choose" v-if="chooseAgain">
+            <div class="con">
+                <div class="p1">
+                    <img :src="goodslist.goodsImgs[0]" :alt="goodslist.goodsName">
+                    <div>
+                        <p>{{goodslist.goodsPrice.currentPrice | price}}</p>
+                        <p v-show="pleChCo">请选择颜色、尺码</p>
+                        <p v-show="yixuan">已选:{{keycolor}}、{{keysize}}</p>
+                    </div>
+                    <p class="circle" @click="chooseAgain =!chooseAgain">×</p>
+                </div>
+                <div class="p2">
+                    <p class="left">颜色</p>
+                    <!--r-test2 选中样式-->
+                    <ul class="r-ul">
+                        <li class="r-test2" :class="{'r-test':iscur===index}" v-for="(item,index) in
+                            goodslist.goodsAttr.color" @click="tabclick(item,index)">{{item}}</li>
+                    </ul>
+                </div>
+                <div class="p3">
+                    <p class="left">尺码</p>
+                    <!--r-test2 选中样式-->
+                    <ul class="r-ul">
+                        <li class="r-test2" :class="{'r-test':iscur2===index}" v-for="(item,index) in
+                            goodslist.goodsAttr.size" @click="tabclick2(item,index)">{{item}}</li>
+                    </ul>
+                </div>
+                <div class="p4">
+                    <p class="left">数量</p>
+                    <div class="likebtn">
+                        <!--@click="changeQuantity(item,-1,index)" -->
+                        <span class="dec" @click="changecount(-1)">-</span>
+                        <!--:value="item.count"-->
+                        <input type="text" disabled :value="changenum"/>
+                        <!--@click="changeQuantity(item,1)"-->
+                        <span  class="add" @click="changecount(1)">+</span>
                     </div>
                 </div>
-               <!-- 颜色 -->
-                <div class="color">
-                    <span  v-if="colors"     class="color-name" :class="{change:colors
-                    }">颜色 <span class="btn" @click="colorchange()">黑色</span></span>
-                    <span v-if="color" class="color-name">颜色 <span class="btn" @click="colorchange()"  style="background:white;border:1px solid;color:black">黑色</span></span>
+                <!--底部按钮-->
+                <div class="btn-wrap">
+                    <button class="buynow" @click="showIns">立即购买</button>
+                    <button class="addCarts" @click="addcarts">加入购物车</button>
                 </div>
-                <!-- 尺码 -->
-                <div class="color">
-                    <span class="color-name" v-if="sizes">尺码 <span  @click="sizechange()" class="btn btn1">x</span></span>
-                    <span class="color-name" v-if="size" >尺码 <span  style="background:white;border:1px solid;color:black"   @click="sizechange()"  class="btn btn1">x</span></span>
-                </div>
-              <!-- 数量 -->
-              <div class="numbers">
-                  <span class="number">数量</span>
-                  <div>
-                      <span class="delete" @click="del()">-</span>
-                      <input  class="amount"   type="text"    disabled="1" v-model="amounts">
-                      <span class="add" @click="amounts++">+</span>
-                  </div>
-              </div>
-              <div class="btn-wrap">
-                  <button class="buynow" >立即购买</button>
-                  <button class="addCarts" @click="addcarts()" >加入购物车</button>
-              </div>
             </div>
+
         </div>
     </div>
 </template>
 <script>
 // import swiperVue from '../common/lunbo.vue'
+import {mapState} from 'vuex'
 import TitleTop from "../common/titleTop";
 import { swiper, swiperSlide } from "vue-awesome-swiper";
 // import footerVue from "../common/footer.vue";
@@ -353,12 +402,21 @@ export default {
         // 如果自行设计了插件，那么插件的一些配置相关参数，也应该出现在这个对象中，如下debugger
         debugger: true
       },
+        chooseAgain:false,
+        pleChCo:true,
+        yixuan:false,
+        keycolor:'',
+        keysize:'',
+        iscur:0,
+        iscur2:0,
+        changenum:1,
+        //
       goodslist: {},
       swiperPagination: false,
       commentPage: true,
       returnTop: false,
       shadow: false,
-      panel: false,
+      //panel: false,
       amounts: 1,
       love: false,
       loveheart: true,
@@ -382,29 +440,28 @@ export default {
         msg:{},
     };
   },
-  created() {
-    axios
-      .get("api/goods", {
-        params: {
-          goodsid: 1021225
+    filters:{
+        price(money){
+            return "¥"+money.toFixed(2);
         }
-      })
-      .then(response => {
-        console.log(response.data);
-        console.log(this.goodslist)
-        this.goodslist = response.data;
-        this.comments = response.data.comments;
-        this.count = response.data.comments.count;
-        console.log(this.goodslist);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-  },
+    },
   mounted() {
+      //console.log(this.msgId);
     window.onscroll = this.handleScroll;
+    //向后台获取详情页的数据
+    this.$http.get('api/goods',{
+        params:{
+            goodsid:this.msgId
+        }
+    }).then(({data}) => {
+        this.goodslist = data;
+       // console.log(this.goodslist);
+    })
   },
   computed: {
+      ...mapState({
+          msgId:(state)=>state.data.getId
+      }),
     showimg() {
       if (this.goodslist.goodsImgs.length > 1) {
         return this.loop == true;
@@ -418,13 +475,94 @@ export default {
     },
     showCircle() {
       if (this.amount > 0) {
-        console.log(this.amount);
+        //console.log(this.amount);
         return (this.showCircles = true);
       }
     }
   },
 
   methods: {
+      toCart(){
+          this.$router.push("/cart");
+      },
+      favorite() {
+          //不红的时候  没收藏的时候 loveheart为true;
+          if(this.loveheart){
+              this.$http.get('/api/user/addCollection',{
+                  params:{
+                      goodsid:this.goodslist.goodsId
+                  }
+              }).then(({data}) => {
+                 console.log(data);
+              })
+          }
+          if(this.love){
+              this.$http.get('/api/user/removeCollection',{
+                  params:{
+                      goodsid:this.goodslist.goodsId
+                  }
+              }).then(({data}) => {
+                  console.log(data);
+              })
+          }
+
+          this.love = !this.love;
+          this.loveheart = !this.loveheart;
+
+      },
+      //加入购物车
+      addcarts() {
+          this.amount = this.changenum;
+          this.chooseAgain = !this.chooseAgain;
+          //同时还要向后台穿一波数据,接口到了再写
+          this.$http.get('/api/user/addCart',{
+              params:{
+                  goodsid:this.goodslist.goodsId,
+                  size:this.keysize,
+                  color:this.keycolor,
+                  count:this.amount
+              }
+          }).then((data)=>{
+              //console.log(data);
+          });
+      },
+      showIns(){
+          this.$router.push('order');
+      },
+      //颜色尺寸的选择
+      tabclick(obj,_index){
+          this.keycolor = obj;
+          if(this.keycolor == ''){
+              this.pleChCo = true;
+          }else{
+              this.pleChCo = false;
+              this.yixuan = true;
+          }
+          this.iscur = _index;
+      },
+      tabclick2(obj,_index){
+          this.keysize = obj;
+          this.iscur2 = _index;
+      },
+      yesMsg(){
+
+      },
+      changecount(val){
+          if(this.changenum == 1 && val == -1){
+              this.changenum = 1;
+              //弹框 您选择的数量不能为0
+              $('.iszero').show();
+              setInterval(function(){
+                  $('.iszero').hide();
+              },1000);
+          }else{
+              this.changenum += val;
+          }
+      },
+      getGoodsMsg(){
+          this.chooseAgain = !this.chooseAgain;
+      },
+      //
     del() {
       if (this.amounts <= 1) {
         this.amounts = 1;
@@ -464,37 +602,6 @@ export default {
       this.shadow = !this.shadow;
       console.log(this.shadow);
     },
-    isAdd() {
-      this.panel = !this.panel;
-    },
-    favorite() {
-      this.love = !this.love;
-      this.loveheart = !this.loveheart;
-    },
-    addcarts() {
-      this.amount = this.amounts;
-        this.panel = !this.panel;
-        this.msg={
-            goodsid:this.goodslist.goodsid,
-            count: this.amount,
-            //蔡燕存了size和颜色之后再上传一下
-            size:'',
-            color:'',
-            singlePrice:this.goodslist.goodsPrice.currentPrice
-        };
-        //同时还要向后台穿一波数据,接口到了再写
-        this.$http.get('/api/user/addCart',{
-            params:{
-                goodsid:this.goodslist.goodsId,
-                size:'f',
-                color:'yellow',
-                count:this.amount
-            }
-        }).then((data)=>{
-            //console.log(data);
-        });
-        this.$store.commit("addCartMsg",this.msg);
-    },
     colorchange(){
       this.colors=!this.colors;
       console.log(this.colors)
@@ -511,6 +618,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+    @import '../cart/moGoods';
 @import "../../assets/css/mixin";
 // 第一层
 .wrap {
@@ -1187,32 +1295,39 @@ export default {
         font-size: 1rem;
       }
     }
-    .btn-wrap {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      .buynow {
-        width: 50%;
-        height: 2rem;
-        border: none;
-        background: #444;
-        color: #fff;
-        font-size: 0.8rem;
-        float: left;
-        outline: none;
-      }
-      .addCarts {
-        width: 50%;
-        height: 2rem;
-        border: none;
-        background: #d0021b;
-        color: #fff;
-        font-size: 0.8rem;
-        float: left;
-        outline: none;
-      }
-      
-    }
+
   }
 }
+    .btn-wrap {
+        position: fixed;
+        left:0;
+        z-index:9999;
+        bottom: 0;
+        width: 100%;
+        .buynow {
+            width: 50%;
+            height: 2.344rem;
+            line-height:2.344rem;
+            border: none;
+            background: #444;
+            color: #fff;
+            font-size: 0.8rem;
+            float: left;
+            outline: none;
+            border:0;
+        }
+        .addCarts {
+            width: 50%;
+            height: 2.344rem;
+            line-height:2.344rem;
+            border: none;
+            background: #d0021b;
+            color: #fff;
+            font-size: 0.8rem;
+            float: left;
+            outline: none;
+            border:0;
+        }
+
+    }
 </style>

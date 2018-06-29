@@ -2,9 +2,9 @@
     <div class="footertwo">
         <p class="userRelevant">
             <span>Hi,</span>
-            <span><a class="user-name" href="">YOHO-aa0jflj</a></span>
+            <span><a class="user-name" href="/personalCenter">{{username}}</a></span>
             <span class="sep-line" style="color: #e0e0e0; margin: 0 .85rem;">|</span>
-            <span><a href="">退出</a></span>
+            <span @click="signOut"><a href="javascript:void(0)">退出</a></span>
             <span class="back-to-top" style="position: absolute; right: 1rem"><scorll-to-top></scorll-to-top></span>
         </p>
         <p class="address">CopyRight©2007-2018 南京新与力文化传播有限公司</p>
@@ -15,8 +15,24 @@
     import ScorllToTop from './scrollToTop'
     export default {
         name: "footer-two",
+        data(){
+            return{
+                username:''
+            }
+        },
+        mounted(){
+            this.username = localStorage.username;
+            //console.log(this.username);
+        },
         components:{
             ScorllToTop
+        },
+        methods:{
+            signOut(){
+                //登出
+                this.$http.get('api/logout');
+                this.$router.push('/signIn');
+            }
         }
     }
 </script>
