@@ -99,7 +99,7 @@
 </script>
 
 <style lang="less" scoped>
-    @import "../../assets/fonts/iconfont.css";
+    /*@import "../../assets/fonts/iconfont.css";*/
     .hue {
         color: orangered;
     }

@@ -78,7 +78,7 @@
                     Bus.$emit("secondclass",_name);
                 },500)
                 this.theQuery = _name;
-                console.log(this.theQuery);
+                // console.log(this.theQuery);
                 this.$router.push({
                     path:"/list",
                     query: {
